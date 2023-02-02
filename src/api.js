@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
 /** API Class.
  *
@@ -35,7 +35,8 @@ class SharebnbApi {
         const url = `${BASE_URL}/${endpoint}`;
         const headers = {
             Authorization: `Bearer ${SharebnbApi.token}`,
-            "Content-Type": "application/json"
+            // "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
         };
         const params = (method === "get")
             ? data
@@ -96,7 +97,7 @@ class SharebnbApi {
      * @returns the JWT for the user
      */
     static async signupUser(newUserData) {
-        const res = await this.request("auth/register", newUserData, "post");
+        const res = await this.request("auth/signup", newUserData, "post");
         //TODO: add back in resp.token
         return res;
     }
@@ -109,7 +110,7 @@ class SharebnbApi {
      * @returns the JWT for the user
      */
     static async loginUser(userData) {
-        const res = await this.request("auth/token", userData, "post");
+        const res = await this.request("auth/login", userData, "post");
 
         return res.token;
     }

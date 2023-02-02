@@ -24,23 +24,39 @@ for a post to be made creating a User
  */
 function SignupForm({ signup }) {
 
-    const [formData, setFormData] = useState(defaultInitialFormData);
+    const [formDataText, setFormDataText] = useState(defaultInitialFormData);
+    const [selectedFile, setSelectedFile] = useState(null);
     // const [toast, setToast] = useState({ open: false, msg: null, style: null });
 
     const navigate = useNavigate();
 
-    /** Update form input. */
+    /** Update form text input. */
     function handleChange(evt) {
         const { name, value } = evt.target;
-        setFormData((fData) => ({
+        setFormDataText((fData) => ({
             ...fData,
             [name]: value,
         }));
     }
 
+    /** Update form file input. */
+    function handleFileInput(evt) {
+        setSelectedFile(evt.target.files[0]);
+    }
+
     /** Call parent function with the user's inputs */
     async function handleSubmit(evt) {
         evt.preventDefault();
+        console.log("formDataText", formDataText);
+        console.log("selectedFile", selectedFile);
+
+        const formData = new FormData();
+        formData.append("text", formDataText);
+        formData.append("file", selectedFile);
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+            console.log(formData.entries().username);
+        }
         await signup(formData);
 
 
@@ -66,7 +82,7 @@ function SignupForm({ signup }) {
                             onChange={handleChange}
                         />
                     ))}
-                    <input label="image" name="image" type="file" onChange={handleChange} />
+                    <input label="image" name="image" type="file" onChange={handleFileInput} />
                     <Button variant="outlined" type="submit">Signup!</Button>
                 </Stack>
             </form>
