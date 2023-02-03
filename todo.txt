@@ -1,5 +1,5 @@
 1) add pool form (maybe a yourPools page that has cards of your pools and lets 
-you add pools)
+you add pools) - done
 2) add messages modal and figure out how to have it on the pool list 
 3) add inbox/outbox(which could possibly be all within a user profile dashboard)
 4) add dynamic navbar

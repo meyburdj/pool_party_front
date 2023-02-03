@@ -26,7 +26,7 @@ function RoutesList({ signup, login }) {
             <Routes>
                 {!user && (
                     <>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<PoolList />} />
                         <Route path="/signup" element={<SignupForm signup={signup} />} />
                         <Route path="/login" element={<LoginForm login={login} />} />
                     </>

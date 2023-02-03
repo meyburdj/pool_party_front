@@ -103,7 +103,11 @@ class PoolPartyApi {
      */
     static async createPool(newPoolData) {
         console.log("im at createPool");
-        let res = await this.request(`pools`, newPoolData, 'post', "multipart/form-data");
+        let res = await this.request(
+            "pools",
+            newPoolData,
+            "post",
+            "multipart/form-data");
         console.log("we have gotten to the res", res);
         return res.pool;
     }

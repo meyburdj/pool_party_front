@@ -52,6 +52,9 @@ function NavBar({ logout }) {
               <Link to="/messages" style={linkStyle}>
                 <Button color="inherit">messages</Button>
               </Link>
+              <Link to="/mypools" style={linkStyle}>
+                <Button color="inherit">mypools</Button>
+              </Link>
 
               <button
                 onClick={() => {
