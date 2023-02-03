@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import { BrowserRouter } from "react-router-dom";
-// import './App.css';
+import './App.css';
 import RoutesList from "./RoutesList";
 import Navigation from "./Navigation";
 import { useState, useEffect } from "react";
@@ -11,6 +11,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
 import userContext from "./UserContext";
+
 
 /**
  * App: it's an App! Parent component for entire ShareBNB application.
@@ -115,11 +116,14 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         <userContext.Provider value={{ user: user }}>
           <Navigation logout={logout} />
-          <RoutesList signup={signup} login={login} />
+          <div className="Background">
+            <RoutesList signup={signup} login={login} />
+          </div>
+
         </userContext.Provider>
       </BrowserRouter>
     </div>
@@ -127,3 +131,4 @@ function App() {
 }
 
 export default App;
+
