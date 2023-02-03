@@ -10,6 +10,7 @@ import Reservations from "./Reservations";
 import Users from "./Users";
 import Messages from "./Messages";
 import MyPools from "./MyPools";
+import Mailbox from "./Mailbox";
 
 /**
  * RoutesList: renders individual Route components
@@ -38,7 +39,7 @@ function RoutesList({ signup, login }) {
                         <Route path="/reservations" element={<Reservations />} />
                         <Route path="/mypools" element={<MyPools />} />
                         <Route path="/users" element={<Users />} />
-                        <Route path="/messages" element={<Messages />} />
+                        <Route path="/messages" element={<Mailbox />} />
                     </>
                 )}
                 <Route path="*" element={<Navigate to="/" />} />

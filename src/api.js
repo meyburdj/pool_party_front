@@ -243,10 +243,10 @@ class PoolPartyApi {
      * @returns the message data
      */
     static async sendMessage(newMessageData) {
-        console.log("🚀 ~ file: api.js:246 ~ PoolPartyApi ~ sendMessage ~ newMessageData", newMessageData)
+        console.log("🚀 ~ file: api.js:246 ~ PoolPartyApi ~ sendMessage ~ newMessageData", newMessageData);
         // console.log("we have started to send a Message");
 
-        const res = await this.request("messages", newMessageData, "post")
+        const res = await this.request("messages", newMessageData, "post");
 
         console.log("we have gotten to the sendMessage res", res);
 
@@ -284,6 +284,20 @@ class PoolPartyApi {
     /**************************************************************************/
     /************************   MESSAGE REQUESTS START   **********************/
 
+
+    /**
+   * Returns all Messages sent to and sent from current user,
+   *
+   * @param {string} message_id - message_id to retreive message by
+   * @returns object with key of inbox and outbox
+   */
+    static async getMessages() {
+        console.log("i'm in getmessages in api");
+        const res = await this.request("messages");
+        console.log("res from getmessages api", res);
+
+        return res.messages;
+    }
     /**
      * Returns all Messages sent to and sent from current user,
      *
