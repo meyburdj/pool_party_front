@@ -21,6 +21,8 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("sharebnbToken"));
   const [toast, setToast] = useState({ open: false, msg: null });
   const [isLoading, setIsLoading] = useState(true);
+  const [pools, setPools] = useState();
+
 
   /**
    * effect triggered on change of token state. Checks localStorage for token.
@@ -113,6 +115,22 @@ function App() {
     setUser(null);
     setToken(null);
     localStorage.removeItem("sharebnbToken");
+  }
+
+  useEffect(function getPools() {
+    search();
+  }, []);
+
+  /** Search function  */
+  async function search(nameLike) {
+    if (nameLike !== undefined) {
+      nameLike = nameLike.trim();
+    }
+    if (nameLike === '') {
+      nameLike = undefined
+    }
+    const pools = await JoblyApi.getPools(nameLike);
+    setPools(pools);
   }
 
   return (

@@ -1,19 +1,19 @@
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, CardActions, CardMedia, Button, Typography } from '@mui/material';
 import currency from "currency.js";
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
 
 /**
  * PoolCard: renders an individual pool card.
- * 
+ *
  * Props:
  * - pool: object for a single pool
- * 
+ *
  * State: N/A
- * 
+ *
  * PoolCardList -> [PooLCard, PooLCard, ... ]
  */
 
