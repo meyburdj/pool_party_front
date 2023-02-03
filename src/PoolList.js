@@ -51,6 +51,9 @@ function PoolList() {
     return (
         <>
             <MultiSelectForm label="Cities" options={cities} select={getPoolsByCity} />
+            <div style={{ "display": "flex", "justifyContent": "center" }}>
+                <h2>Join Your Party</h2>
+            </div>
             <PoolCardList pools={pools.data} />
         </>
     );

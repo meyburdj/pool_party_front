@@ -102,8 +102,9 @@ class PoolPartyApi {
      * @returns object representing a single pool
      */
     static async createPool(newPoolData) {
-        let res = await this.request(`pools`, { newPoolData }, 'post', "multipart/form-data");
-
+        console.log("im at createPool");
+        let res = await this.request(`pools`, newPoolData, 'post', "multipart/form-data");
+        console.log("we have gotten to the res", res);
         return res.pool;
     }
 
@@ -314,10 +315,11 @@ class PoolPartyApi {
      * @param {string} username - search term to filter pools by
      * @returns array of pool objects
      */
-     static async getPoolsByUsername(username) {
+    static async getPoolsByUsername(username) {
         // const data = nameLike ? { nameLike } : {};
         const res = await this.request(`users/${username}/pools`);
-
+        console.log("pools", res.pools);
+        console.log("res", res);
         return res.pools;
     }
 

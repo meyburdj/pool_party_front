@@ -56,11 +56,10 @@ function AddPoolForm({ addPool }) {
     formData.append("file", selectedFile);
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
-      console.log(formData.entries().username);
     }
     await addPool(formData);
 
-    setFormDataText(defaultInitialFormData)
+    setFormDataText(defaultInitialFormData);
     // navigate("/");
   }
 
@@ -89,7 +88,7 @@ function AddPoolForm({ addPool }) {
             onChange={handleFileInput}
           />
           <Button variant="outlined" type="submit">
-            Signup!
+            Add Pool!
           </Button>
         </Stack>
       </form>

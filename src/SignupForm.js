@@ -21,6 +21,8 @@ const defaultInitialFormData = {
 for a post to be made creating a User
 *
 * State: formData allows the component to be controlled.
+*
+*
  */
 function SignupForm({ signup }) {
 

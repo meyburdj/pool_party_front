@@ -4,6 +4,7 @@ import userContext from "./UserContext";
 import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
 import PoolCardList from "./PoolCardList";
+import AddPoolForm from "./AddPoolForm";
 
 function MyPools() {
   const { user } = useContext(userContext);
@@ -16,6 +17,14 @@ function MyPools() {
   useEffect(function getUsersPools() {
     fetchUsersPoolsFromApi();
   }, []);
+
+  async function addPool(newPoolData) {
+    console.log("we are in the addPool function in mypools");
+    const newPool = await PoolPartyApi.createPool(newPoolData);
+    console.log("we have hit the newPool", newPool);
+
+    setPools([...pools, newPool]);
+  }
 
   async function fetchUsersPoolsFromApi() {
     try {
@@ -38,7 +47,8 @@ function MyPools() {
 
   return (
     <div>
-      {pools.length === 0 && <h4>Add your pools!</h4>}
+      <AddPoolForm addPool={addPool} />
+      {/* {pools.length === 0 && <h4>Add your pools!</h4>} */}
       {pools.length >= 0 && <PoolCardList pools={pools.data} />}
     </div>
   );

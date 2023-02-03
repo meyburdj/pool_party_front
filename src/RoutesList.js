@@ -36,7 +36,7 @@ function RoutesList({ signup, login }) {
                     <>
                         <Route path="/" element={<PoolList />} />
                         <Route path="/reservations" element={<Reservations />} />
-                        <Route path="/:username/mypools" element={<MyPools />} />
+                        <Route path="/mypools" element={<MyPools />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/messages" element={<Messages />} />
                     </>

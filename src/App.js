@@ -133,6 +133,8 @@ function App() {
     setPools(pools);
   }
 
+  if (isLoading) return <p><LinearProgress /></p>;
+
   return (
     <div className="App">
       <BrowserRouter>

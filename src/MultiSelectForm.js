@@ -20,8 +20,8 @@ function MultiSelectForm({ label, options, select }) {
                     value={label}
                     onChange={handleChange}
                 >
-                    <MenuItem value="">
-                        <em>None</em>
+                    <MenuItem >
+                        <em>Cities</em>
                     </MenuItem>
                     {options.map(option => <MenuItem key={`${option}-normal`} value={option}> {option}</MenuItem>)}
                 </Select>
