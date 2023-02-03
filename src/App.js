@@ -4,7 +4,7 @@ import './App.css';
 import RoutesList from "./RoutesList";
 import Navigation from "./Navigation";
 import { useState, useEffect } from "react";
-import SharebnbApi from "./api";
+import PoolPartyApi from "./api";
 // import userContext from "./userContext";
 import { TextField, Button, LinearProgress } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
@@ -32,8 +32,8 @@ function App() {
     function getUserData() {
       async function fetchUserDataFromApi() {
         console.log("UseEffect token: ", token);
-        SharebnbApi.token = token;
-        // SharebnbApi.token = token;
+        PoolPartyApi.token = token;
+        // PoolPartyApi.token = token;
         const { username } = jwt_decode(token);
         console.log(
           "🚀 ~ file: App.js:32 ~ fetchUserDataFromApi ~ username",
@@ -42,7 +42,7 @@ function App() {
 
         try {
           console.log("starting try block");
-          const { email, location } = await SharebnbApi.fetchUserData(username);
+          const { email, location } = await PoolPartyApi.fetchUserData(username);
 
           const newUser = { username, email, location };
 
@@ -78,7 +78,7 @@ function App() {
    * page doesn't redirect.
    */
   async function login(data) {
-    const newToken = await SharebnbApi.loginUser(data);
+    const newToken = await PoolPartyApi.loginUser(data);
     setToken(newToken);
     console.log("token", token);
   }
@@ -89,7 +89,7 @@ function App() {
    * so that page doesn't redirect.
    */
   async function signup(data) {
-    const newToken = await SharebnbApi.signupUser(data);
+    const newToken = await PoolPartyApi.signupUser(data);
     setToken(newToken);
   }
 
@@ -97,7 +97,7 @@ function App() {
    * updateProfile function makes api call to "/users/:username".
    */
   async function updateProfile(data) {
-    const { username, email, location } = await SharebnbApi.updateUser(data);
+    const { username, email, location } = await PoolPartyApi.updateUser(data);
 
     setUser((curr) => ({
       username,
@@ -107,11 +107,11 @@ function App() {
   }
 
   /**
-   * function that sets user to null, removes SharebnbApi token, effectively
+   * function that sets user to null, removes PoolPartyApi token, effectively
    * logging them out from the application
    */
   function logout() {
-    SharebnbApi.token = "";
+    PoolPartyApi.token = "";
     setUser(null);
     setToken(null);
     localStorage.removeItem("sharebnbToken");
@@ -127,9 +127,9 @@ function App() {
       nameLike = nameLike.trim();
     }
     if (nameLike === '') {
-      nameLike = undefined
+      nameLike = undefined;
     }
-    const pools = await JoblyApi.getPools(nameLike);
+    const pools = await PoolPartyApi.getPools(nameLike);
     setPools(pools);
   }
 
