@@ -179,8 +179,8 @@ class PoolPartyApi {
 
     /**
         * Creates a new reservation
-        * 
-        * @param {object} reservationData - new reservation information, required: 
+        *
+        * @param {object} reservationData - new reservation information, required:
         * {pool_id, start_date, end_date}
         * @returns serialized information on that pool
         */
@@ -306,6 +306,21 @@ class PoolPartyApi {
 
         return res.user;
     }
+
+
+    /**
+     * Get all pools of logged in user
+     *
+     * @param {string} username - search term to filter pools by
+     * @returns array of pool objects
+     */
+     static async getPoolsByUsername(username) {
+        // const data = nameLike ? { nameLike } : {};
+        const res = await this.request(`users/${username}/pools`);
+
+        return res.pools;
+    }
+
 }
 
 export default PoolPartyApi;

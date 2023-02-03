@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import { BrowserRouter } from "react-router-dom";
-import './App.css';
+import "./App.css";
 import RoutesList from "./RoutesList";
 import Navigation from "./Navigation";
 import { useState, useEffect } from "react";
@@ -12,7 +12,6 @@ import MuiAlert from "@mui/material/Alert";
 import jwt_decode from "jwt-decode";
 import userContext from "./UserContext";
 
-
 /**
  * App: it's an App! Parent component for entire ShareBNB application.
  */
@@ -22,7 +21,6 @@ function App() {
   const [toast, setToast] = useState({ open: false, msg: null });
   const [isLoading, setIsLoading] = useState(true);
   const [pools, setPools] = useState();
-
 
   /**
    * effect triggered on change of token state. Checks localStorage for token.
@@ -42,7 +40,9 @@ function App() {
 
         try {
           console.log("starting try block");
-          const { email, location } = await PoolPartyApi.fetchUserData(username);
+          const { email, location } = await PoolPartyApi.fetchUserData(
+            username
+          );
 
           const newUser = { username, email, location };
 
@@ -126,7 +126,7 @@ function App() {
     if (nameLike !== undefined) {
       nameLike = nameLike.trim();
     }
-    if (nameLike === '') {
+    if (nameLike === "") {
       nameLike = undefined;
     }
     const pools = await PoolPartyApi.getPools(nameLike);
@@ -141,7 +141,6 @@ function App() {
           <div className="Background">
             <RoutesList signup={signup} login={login} />
           </div>
-
         </userContext.Provider>
       </BrowserRouter>
     </div>
@@ -149,4 +148,3 @@ function App() {
 }
 
 export default App;
-

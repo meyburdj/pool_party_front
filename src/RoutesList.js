@@ -9,6 +9,7 @@ import userContext from "./UserContext";
 import Reservations from "./Reservations";
 import Users from "./Users";
 import Messages from "./Messages";
+import MyPools from "./MyPools";
 
 /**
  * RoutesList: renders individual Route components
@@ -35,6 +36,7 @@ function RoutesList({ signup, login }) {
                     <>
                         <Route path="/" element={<PoolList />} />
                         <Route path="/reservations" element={<Reservations />} />
+                        <Route path="/mypools" element={<MyPools />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/messages" element={<Messages />} />
                     </>
