@@ -1,5 +1,5 @@
 import { Card, CardContent, CardActions, CardMedia, Button, Typography } from '@mui/material';
-import currency from "currency.js";
+// import currency from "currency.js";
 // import CardActions from '@mui/material/CardActions';
 // import CardContent from '@mui/material/CardContent';
 // import CardMedia from '@mui/material/CardMedia';
@@ -36,8 +36,8 @@ function PoolCard({ pool }) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={startChat} size="small">Chat with Host</Button>
-                <Button onClick={reserve} size="small">Join the Party!</Button>
+                <Button size="small">Chat with Host</Button>
+                <Button size="small">Join the Party!</Button>
             </CardActions>
         </Card>
     );
@@ -45,3 +45,5 @@ function PoolCard({ pool }) {
 
 
 export default PoolCard;
+
+//TODO: add chat function to onClick button. add reserve function to onclick button

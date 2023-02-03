@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import SignupForm from "./SignupForm";
 import { Container } from "@mui/system";
 import LoginForm from "./LoginForm";
+import PoolList from "./PoolList";
 import Home from "./Home";
 import { useContext } from "react";
 import userContext from "./UserContext";
@@ -22,9 +23,9 @@ function RoutesList({ signup, login }) {
     return (
         <Container>
             <Routes>
-                <Route path="/" element={<Home />} />
                 {!user && (
                     <>
+                        <Route path="/" element={<Home />} />
                         <Route path="/signup" element={<SignupForm signup={signup} />} />
                         <Route path="/login" element={<LoginForm login={login} />} />
                     </>
@@ -32,6 +33,7 @@ function RoutesList({ signup, login }) {
 
                 {user && (
                     <>
+                        <Route path="/" element={<PoolList />} />
                         <Route path="/reservations" element={<Reservations />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/messages" element={<Messages />} />

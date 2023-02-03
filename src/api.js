@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
 /** API Class.
  *
@@ -111,6 +111,16 @@ class PoolPartyApi {
 
     /* TODO: POST POOL IMAGE */
 
+
+    /**
+    * Get details on a pool by handle.
+    *
+    * @returns object with array of pools
+    */
+    static async getPools() {
+        let res = await this.request(`pools`);
+        return res.pools;
+    }
 
     /**
      * Get details on a pool by handle.
