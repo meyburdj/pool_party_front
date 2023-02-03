@@ -21,41 +21,47 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   /**
-     * effect triggered on change of token state. Checks localStorage for token. 
+     * effect triggered on change of token state. Checks localStorage for token.
      * If token exists then setToken, triggering other useEffect
      */
   useEffect(function getUserData() {
     async function fetchUserDataFromApi() {
-
-      SharebnbApi.token = token;
-      const { username } = jwt_decode(token);
+      console.log("UseEffect token: ", token);
+      SharebnbApi.token = token["token"];
+      // SharebnbApi.token = token["token"];
+      const { username } = jwt_decode(token['token']);
+      console.log("🚀 ~ file: App.js:32 ~ fetchUserDataFromApi ~ username", username)
 
       try {
-
+        console.log("starting try block");
         const { username, email, location } = (await
           SharebnbApi.fetchUserData(username));
 
         const newUser = { username, email, location };
 
         setUser(newUser);
+        console.log("made it to end of try");
       } catch (err) {
-
+        console.log("got an error: ", err);
         setToast({ open: true, msg: err[0] });
       } finally {
+        console.log("finally statement");
         setIsLoading(false);
       }
     }
     if (token) {
       fetchUserDataFromApi();
-      localStorage.setItem("sharebnbToken", token);
+      localStorage.setItem("sharebnbToken", token['token']);
+      console.log("setting token for local storage to: ", token['token']);
     }
     else {
+      console.log("setting loading to false");
       setIsLoading(false);
     }
   }, [token]);
 
-  /** 
-  * login function makes api call to "/auth/token" to retrieve token. If call 
+  /**
+  * login function makes api call to "/auth/token" to retrieve token. If call
   * is successful calls getUserAndJobs. If not successful, return false so that
   * page doesn't redirect.
   */
@@ -65,17 +71,17 @@ function App() {
   }
 
 
-  /** 
-    * signup function makes api call to "/auth/register" to retrieve token. If 
-    * call is successful calls getUserAndJobs. If not successful, return false 
-    * so that page doesn't redirect. 
+  /**
+    * signup function makes api call to "/auth/register" to retrieve token. If
+    * call is successful calls getUserAndJobs. If not successful, return false
+    * so that page doesn't redirect.
     */
   async function signup(data) {
     const newToken = await SharebnbApi.signupUser(data);
     setToken(newToken);
   }
 
-  /** 
+  /**
 * updateProfile function makes api call to "/users/:username".
 */
   async function updateProfile(data) {
@@ -90,7 +96,7 @@ function App() {
   }
 
   /**
-   * function that sets user to null, removes SharebnbApi token, effectively 
+   * function that sets user to null, removes SharebnbApi token, effectively
    * logging them out from the application
    */
   function logout() {
@@ -104,7 +110,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <RoutesList signup={signup} />
+        <RoutesList signup={signup} login={login} />
       </BrowserRouter>
     </div>
   );

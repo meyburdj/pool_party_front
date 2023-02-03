@@ -51,7 +51,11 @@ function SignupForm({ signup }) {
         console.log("selectedFile", selectedFile);
 
         const formData = new FormData();
-        formData.append("text", formDataText);
+        const formDataTextKeys = Object.keys(formDataText);
+        formDataTextKeys.map(x => formData.append(x,formDataText[x]))
+
+
+        // formData.append("text", formDataText);
         formData.append("file", selectedFile);
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
