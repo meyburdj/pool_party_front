@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001/api";
 
 /** API Class.
  *
@@ -236,7 +236,23 @@ class PoolPartyApi {
 
 
 
-    /* TODO: POST CREATE MESSAGE */
+
+    /**
+     *
+     * @param {object} newMessageData  - new messsage information, {sender_username, recipient_username, title, body, listing}
+     * @returns the message data
+     */
+    static async sendMessage(newMessageData) {
+        console.log("🚀 ~ file: api.js:246 ~ PoolPartyApi ~ sendMessage ~ newMessageData", newMessageData)
+        // console.log("we have started to send a Message");
+
+        const res = await this.request("messages", newMessageData, "post")
+
+        console.log("we have gotten to the sendMessage res", res);
+
+        return res.message;
+    }
+
 
     /**
      * Returns all Messages sent to and sent from current user,
