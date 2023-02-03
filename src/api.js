@@ -101,8 +101,8 @@ class SharebnbApi {
         const res = await this.request("auth/signup", newUserData, "post", "multipart/form-data");
         //TODO: add back in resp.token
 
-        console.log("🚀 ~ file: api.js:105 ~ SharebnbApi ~ signupUser ~ res", res)
-        return res;
+        console.log("🚀 ~ file: api.js:105 ~ SharebnbApi ~ signupUser ~ res", res);
+        return res.token;
     }
 
     /**
@@ -114,7 +114,7 @@ class SharebnbApi {
      */
     static async loginUser(userData) {
         const res = await this.request("auth/login", userData, "post");
-        console.log("🚀 ~ file: api.js:116 ~ SharebnbApi ~ loginUser ~ res", res)
+        console.log("🚀 ~ file: api.js:116 ~ SharebnbApi ~ loginUser ~ res", res);
 
         return res.token;
     }

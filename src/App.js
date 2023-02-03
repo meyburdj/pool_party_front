@@ -27,14 +27,14 @@ function App() {
   useEffect(function getUserData() {
     async function fetchUserDataFromApi() {
       console.log("UseEffect token: ", token);
-      SharebnbApi.token = token["token"];
-      // SharebnbApi.token = token["token"];
-      const { username } = jwt_decode(token['token']);
-      console.log("🚀 ~ file: App.js:32 ~ fetchUserDataFromApi ~ username", username)
+      SharebnbApi.token = token;
+      // SharebnbApi.token = token;
+      const { username } = jwt_decode(token);
+      console.log("🚀 ~ file: App.js:32 ~ fetchUserDataFromApi ~ username", username);
 
       try {
         console.log("starting try block");
-        const { username, email, location } = (await
+        const { email, location } = (await
           SharebnbApi.fetchUserData(username));
 
         const newUser = { username, email, location };
@@ -51,8 +51,9 @@ function App() {
     }
     if (token) {
       fetchUserDataFromApi();
-      localStorage.setItem("sharebnbToken", token['token']);
-      console.log("setting token for local storage to: ", token['token']);
+      localStorage.setItem("sharebnbToken", token);
+      console.log("setting token for local storage to: ", token);
+      console.log("localStorage token", localStorage.getItem("sharebnbToken"));
     }
     else {
       console.log("setting loading to false");
@@ -68,6 +69,7 @@ function App() {
   async function login(data) {
     const newToken = await SharebnbApi.loginUser(data);
     setToken(newToken);
+    console.log("token", token);
   }
 
 
@@ -110,6 +112,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Navigation logout={logout} />
         <RoutesList signup={signup} login={login} />
       </BrowserRouter>
     </div>

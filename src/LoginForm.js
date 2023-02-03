@@ -37,7 +37,7 @@ function LoginForm({ login }) {
     evt.preventDefault();
     try {
       await login(formData);
-      setToast({ open: true, msg: "Logged in!", style: "success" });
+      // setToast({ open: true, msg: "Logged in!", style: "success" });
     } catch (err) {
       console.log(err);
       setToast({ open: true, msg: err[0], style: "error" });
