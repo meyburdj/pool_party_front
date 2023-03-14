@@ -1,3 +1,39 @@
+# Pool Party BnB
+
+## Instructions
+- Fork  or Clone the project
+### How to start the program
+- in your terminal run `npm start`
+
+
+### How to run tests
+
+
+
+## TODOs / Aspirations
+// TODO: frontend README - chris
+// TODO: backend README - chris
+// TODO: finish up messages - flesh out inbox and outbox - Jesse
+// TODO: check for bug // regarding adding form  - Jesse
+// TODO: setup infinite scroll - Chris
+// TODO: integrtate Reservations Setup - Jesse backend / Chris Frontend
+// TODO: testing -> Goal > 80%
+
+
+## Deployed link
+
+
+## Proud Code Snippet and How You Solved It
+
+
+## Flow Chart
+![Flow Chart](ComponentDiagramV2.png)
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
