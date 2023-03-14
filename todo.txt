@@ -1,12 +1,12 @@
-1) add pool form (maybe a yourPools page that has cards of your pools and lets 
+1) add pool form (maybe a yourPools page that has cards of your pools and lets
 you add pools) - done
-2) add messages modal and figure out how to have it on the pool list 
+2) add messages modal and figure out how to have it on the pool list
 3) add inbox/outbox(which could possibly be all within a user profile dashboard)
 4) add dynamic navbar
-5) add a pool page(/pools/:pool_id) that shows allthe pictures and has the 
+5) add a pool page(/pools/:pool_id) that shows allthe pictures and has the
 information from the cards
-7) add reservation function 
-8) add profile page that has your reservations and pools 
+7) add reservation function
+8) add profile page that has your reservations and pools
 9) make version of pool page where buttons redirect to login or signup pages
 (landing page. just needs some basic styling)
 
@@ -26,6 +26,15 @@ outbox
 write message(modal)
 myPools(add pool)
 myReservations
+
+
+// TODO: frontend README - chris
+// TODO: backend README - chris
+// TODO: finish up messages - flesh out inbox and outbox - Jesse
+// TODO: check for bug // regarding adding form  - Jesse
+// TODO: setup infinite scroll - Chris
+// TODO: integrtate Reservations Setup - Jesse backend / Chris Frontend
+// TODO: testing -> Goal > 80%
 
 
 
