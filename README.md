@@ -1,16 +1,16 @@
-# Pool Party BnB
+# Pool Party BnB - Frontend
 
-## Instructions
-- Fork  or Clone the project
 ### How to start the program
-- in your terminal run `npm start`
-
+1) Fork  or Clone the project to your machine
+2) Navigate to the projects directory
+3) in your terminal `npm install` to install dependencies
+3) in your terminal run `npm start`
 
 ### How to run tests
 
 
 
-## TODOs / Aspirations
+### TODOs / Aspirations
 // TODO: frontend README - chris
 // TODO: backend README - chris
 // TODO: finish up messages - flesh out inbox and outbox - Jesse
@@ -20,19 +20,57 @@
 // TODO: testing -> Goal > 80%
 
 
-## Deployed link
+### Deployed link
 
 
-## Proud Code Snippet and How You Solved It
+### Proud Code Snippet and How You Solved It
 
 
-## Flow Chart
+### Flow Chart
 ![Flow Chart](ComponentDiagramV2.png)
 
 
+### Project Structure
+sharebnb_front
+    ├── ComponentDiagramV2.png
+    ├── README.md
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+    │   ├── favicon.ico
+    │   ├── index.html
+    │   ├── logo192.png
+    │   ├── logo512.png
+    │   ├── manifest.json
+    │   └── robots.txt
+    ├── src
+    │   ├── AddPoolForm.js
+    │   ├── App.css
+    │   ├── App.js
+    │   ├── App.test.js
+    │   ├── Home.js
+    │   ├── LoginForm.js
+    │   ├── Mailbox.js
+    │   ├── Messages.js
+    │   ├── MultiSelectForm.js
+    │   ├── MyPools.js
+    │   ├── Navigation.js
+    │   ├── PoolCard.js
+    │   ├── PoolCardList.js
+    │   ├── PoolList.js
+    │   ├── Reservations.js
+    │   ├── RoutesList.js
+    │   ├── SignupForm.js
+    │   ├── UserContext.js
+    │   ├── Users.js
+    │   ├── api.js
+    │   ├── index.css
+    │   ├── index.js
+    │   ├── reportWebVitals.js
+    │   └── setupTests.js
+    └── todo.txt
 
-
-
+<br/>
 
 # Getting Started with Create React App
 
