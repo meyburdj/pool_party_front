@@ -60,7 +60,6 @@ function Messages() {
                 </Grid>
               </Box>
           ))}
-
         </Grid>
 
       </Grid>
