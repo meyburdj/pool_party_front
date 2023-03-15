@@ -47,16 +47,16 @@ function Messages() {
         </Grid>
 
         <Grid item xs={12} sm={8}>
-          {messages.map(x => (
-            x.from === user.name ?
+          {messages.map(message => (
+            message.sender_username === user.name ?
               <Box display="flex" justifyContent="flex-end">
                 <Grid sm={10}>
-                  <Item >xs=8</Item>
+                  <Item >{message.sender_username}: {message.body}</Item>
                 </Grid>
               </Box> :
-              <Box display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-start">
                 <Grid sm={10}>
-                  <Item >xs=8</Item>
+                  <Item >{message.sender_username}: {message.body}</Item>
                 </Grid>
               </Box>
           ))}
