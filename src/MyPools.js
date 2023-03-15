@@ -51,7 +51,7 @@ function MyPools() {
     <div>
       <AddPoolForm addPool={addPool} />
       {/* {pools.length === 0 && <h4>Add your pools!</h4>} */}
-      <div >
+      <div>
         <h2>Your Pools</h2>
       </div>
       {pools.data.length >= 0 && <PoolCardList pools={pools.data} />}
