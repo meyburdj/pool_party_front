@@ -11,13 +11,13 @@
 
 
 ### TODOs / Aspirations
-// TODO: frontend README - chris
-// TODO: backend README - chris
-// TODO: finish up messages - flesh out inbox and outbox - Jesse
-// TODO: check for bug // regarding adding form  - Jesse
-// TODO: setup infinite scroll - Chris
-// TODO: integrtate Reservations Setup - Jesse backend / Chris Frontend
-// TODO: testing -> Goal > 80%
+- frontend README - chris
+- backend README - chris
+- finish up messages - flesh out inbox and outbox - Jesse
+- check for bug // regarding adding form  - Jesse
+- setup infinite scroll - Chris
+- integrtate Reservations Setup - Jesse backend / Chris Frontend
+- testing -> Goal > 80%
 
 
 ### Deployed link
