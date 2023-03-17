@@ -1,24 +1,7 @@
 import userContext from "./UserContext";
 import PoolPartyApi from "./api";
 import React, { useState, useContext, useEffect } from "react";
-
-// import currency from "currency.js";
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-
-/**
- * PoolCard: renders an individual pool card.
- *
- * Props:
- * - pool: object for a single pool
- *
- * State: N/A
- *
- * PoolCardList -> [PooLCard, PooLCard, ... ]
- */
+import { LinearProgress } from "@mui/material";
 
 function MailBox() {
     const { user } = useContext(userContext);
@@ -27,20 +10,45 @@ function MailBox() {
         isLoading: true,
     });
 
-    useEffect(function getMessagesOnMount() {
-        getMessages();
-    }, []);
+    const [inbox, setInbox] = useState({
+        data: null,
+    });
 
-    async function getMessages() {
-        console.log("Im in getmessages");
-        const response = await PoolPartyApi.getMessages();
-        console.log("response from mailbox", response);
-        setMessages({
-            data: response,
-            isLoading: false,
-        });
+    const [outbox, setOutbox] = useState({
+        data: null,
+    });
+
+    useEffect(function getMessagesAndSortContacts() {
+        async function fetchData() {
+            const response = await PoolPartyApi.getMessages();
+            console.log(response);
+            setMessages({
+                data: response,
+                isLoading: false,
+            });
+            console.log(response.inbox);
+            const sortedInbox = sortContactsBasedOnMessages(response.inbox);
+            const sortedOutbox = sortContactsBasedOnMessages(response.outbox);
+            setInbox(sortedInbox);
+            setOutbox(sortedOutbox);
+
+        }
+
+        fetchData();
+    }, []);
+    console.log(inbox, outbox);
+    function sortContactsBasedOnMessages(messages) {
+        let contacts = new Set();
+
+        for (const message of messages) {
+            message.sender_username === user ?
+                contacts.add(message.recipient_username) :
+                contacts.add(message.sender_username);
+        }
+        return [...contacts];
     }
 
+    if (messages.isLoading) return <p><LinearProgress /></p>;
     console.log(messages);
 
     return (
@@ -66,5 +74,3 @@ function MailBox() {
 }
 
 export default MailBox;
-
-  //TODO: add chat function to onClick button. add reserve function to onclick button
