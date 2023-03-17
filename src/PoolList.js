@@ -20,33 +20,41 @@ import { LinearProgress } from "@mui/material";
 
 function PoolList() {
 
-    const [pools, setPools] = useState({
+    const [allPools, setAllPools] = useState({
         data: null,
         isLoading: true,
     });
 
+    const [pools, setPools] = useState({
+        data: null,
+    });
+
     useEffect(function getPoolsOnMount() {
-        getPools();
+        getAllPools();
     }, []);
 
-    async function getPools() {
+    async function getAllPools() {
         const response = await PoolPartyApi.getPools();
-        setPools({
+        setAllPools({
             data: response,
             isLoading: false,
         });
     }
 
-    async function getPoolsByCity(city) {
-        const response = await PoolPartyApi.getPoolsByCity(city);
+    function getPoolsByCity(city) {
+        let pools;
+        console.log("hi", allPools);
+        console.log(allPools.data.filter(pool => pool.city === city));
+        city === 'all' ?
+            pools = allPools.data :
+            pools = allPools.data.filter(pool => pool.city === city);
         setPools({
-            data: response,
-            isLoading: false,
+            data: pools
         });
     }
 
-    const cities = ["Los Angeles", "San Francisco", "New York", "Seattle"];
-    if (pools.isLoading) return <p><LinearProgress /></p>;
+    const cities = ["all", "Los Angeles", "San Francisco", "New York", "Seattle"];
+    if (allPools.isLoading) return <p><LinearProgress /></p>;
 
     return (
         <>
@@ -54,7 +62,10 @@ function PoolList() {
             <div style={{ "display": "flex", "justifyContent": "center" }}>
                 <h2>Join Your Party</h2>
             </div>
-            <PoolCardList pools={pools.data} />
+            {!pools.data ?
+                <PoolCardList pools={allPools.data} /> :
+                <PoolCardList pools={pools.data} />
+            }
         </>
     );
 }
