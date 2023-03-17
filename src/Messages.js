@@ -36,14 +36,11 @@ function Messages() {
     <Box sx={{ flexGrow: 1, borderColor: 'primary.main' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} >
+          {messages.map(message => (
+            message.text
+          ))}
+          <Item >xs=8</Item>
 
-          <Item >xs=8</Item>
-          <Item >xs=8</Item>
-          <Item >xs=8</Item>
-          <Item >xs=8</Item>
-          <Item >xs=8</Item>
-          <Item >xs=8</Item>
-          <Item >xs=8</Item>
         </Grid>
 
         <Grid item xs={12} sm={8}>
