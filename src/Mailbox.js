@@ -36,7 +36,7 @@ function MailBox() {
 
         fetchData();
     }, []);
-    console.log(inbox, outbox);
+
     function sortContactsBasedOnMessages(messages) {
         let contacts = new Set();
 
