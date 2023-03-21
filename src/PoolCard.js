@@ -89,8 +89,8 @@ function PoolCard({ pool }) {
 
         <CardMedia
           sx={{ height: 140 }}
-          image={pool.image_url}
-          title={pool.image_url}
+          image={pool.small_image_url}
+          title={pool.small_image_url}
           component="img"
           loading="lazy"
         />
