@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid';
  * Messages -> contacts
  * Messages -> [messageCard, messageCard, ...] 
  */
-function Messages() {
+function MessageList() {
   const { user } = useContext(userContext);
   const [messages, setMessages] = useState({
     data: null,
