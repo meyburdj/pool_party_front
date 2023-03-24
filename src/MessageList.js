@@ -5,67 +5,68 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Message from "./Message";
 
 /**
- * Messages: Parent component for conversations and messages
+ * Messages: Parent component for messages
  * 
- * Props: User
- * State: messages
+ * Props: messages
  * 
- * Messages -> contacts
- * Messages -> [messageCard, messageCard, ...] 
+ * Mailbox -> MessageList -> [Message, Message, ...]
+ * 
  */
-function MessageList() {
+function MessageList({ messages }) {
+  console.log("messages", messages);
   const { user } = useContext(userContext);
-  const [messages, setMessages] = useState({
-    data: null,
-    isLoading: true,
-  });
+  // const [messages, setMessages] = useState({
+  //   data: null,
+  //   isLoading: true,
+  // });
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    margin: theme.spacing(1),
-    textAlign: 'center',
-    borderColor: 'red',
-    color: theme.palette.text.secondary
-  }));
-
+  // const Item = styled(Paper)(({ theme }) => ({
+  //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(1),
+  //   margin: theme.spacing(1),
+  //   textAlign: 'center',
+  //   borderColor: 'red',
+  //   color: theme.palette.text.secondary
+  // }));
+  if (!messages) return <div>hello</div>;
   return (
-    <Box sx={{ flexGrow: 1, borderColor: 'primary.main' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4} >
-          {messages.map(message => (
-            message.text
-          ))}
-          <Item >xs=8</Item>
+    // <Box sx={{ flexGrow: 1, borderColor: 'primary.main' }}>
+    //   <Grid container spacing={2}>
+    //     <Grid item xs={12} sm={4} >
+    //       {messages.map(message => (
+    //         message.text
+    //       ))}
+    //       <Item >xs=8</Item>
 
-        </Grid>
+    //     </Grid>
 
-        <Grid item xs={12} sm={8}>
-          {messages.map(message => (
-            message.sender_username === user.name ?
-              <Box display="flex" justifyContent="flex-end">
-                <Grid sm={10}>
-                  <Item >{message.sender_username}: {message.body}</Item>
-                </Grid>
-              </Box> :
-              <Box display="flex" justifyContent="flex-start">
-                <Grid sm={10}>
-                  <Item >{message.sender_username}: {message.body}</Item>
-                </Grid>
-              </Box>
-          ))}
-        </Grid>
+    <Grid item xs={12} sm={8}>
+      {messages.map(message => (
+        message.sender_username === user.name ?
+          <Box display="flex" justifyContent="flex-end">
+            <Grid sm={10}>
+              <Message >{message.sender_username}: {message.body}</Message>
+            </Grid>
+          </Box> :
+          <Box display="flex" justifyContent="flex-start">
+            <Grid sm={10}>
+              <Message >{message.sender_username}: {message.body}</Message>
+            </Grid>
+          </Box>
+      ))}
+    </Grid>
 
-      </Grid>
-    </Box>
+    // </Grid> 
+    // </Box>
   );
 }
 
 
-export default Messages;
+export default MessageList;
 
 
 

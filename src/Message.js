@@ -18,28 +18,42 @@ import Grid from '@mui/material/Grid';
 function Message({ message }) {
     const { user } = useContext(userContext);
 
-    const Item = styled(Paper)(({ theme }) => ({
+    const RecievedMessage = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
         padding: theme.spacing(1),
         margin: theme.spacing(1),
-        textAlign: 'center',
-        borderColor: 'red',
-        color: theme.palette.text.secondary
+        border: '1px solid green',
+        textAlign: 'right',
+    }));
+
+    const SentMessage = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        margin: theme.spacing(1),
+        border: '1px solid blue',
+        textAlign: 'left',
     }));
 
     return (
         message.sender_username === user.name ?
-            <Box display="flex" justifyContent="flex-end">
-                <Grid sm={10}>
-                    <Item >{message.sender_username}: {message.body}</Item>
-                </Grid>
-            </Box> :
             <Box display="flex" justifyContent="flex-start">
                 <Grid sm={10}>
-                    <Item >{message.sender_username}: {message.body}</Item>
+                    <SentMessage >
+                        you: {message.body}
+                    </SentMessage>
+                </Grid>
+            </Box> :
+            <Box display="flex" justifyContent="flex-end">
+                <Grid sm={10}>
+                    <RecievedMessage >
+                        {message.sender_username}: {message.body}
+                    </RecievedMessage>
                 </Grid>
             </Box>
     );
 
 }
+
+export default Message;
