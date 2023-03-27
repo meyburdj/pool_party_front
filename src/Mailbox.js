@@ -21,6 +21,7 @@ function MailBox() {
         data: null,
         isLoading: true,
     });
+    console.log('allMessages', allMessages);
 
     const [displayedMessages, setDisplayedMessages] = useState();
 
@@ -29,15 +30,20 @@ function MailBox() {
     const [inbox, setInbox] = useState();
 
     const [outbox, setOutbox] = useState();
+    console.log("inbox", inbox, "outbox", outbox);
 
     /**effect that requests data concerning messages. Sets messages and sorts by
        contacts so that inbox/outbox state is sorted and with unique entries*/
     useEffect(function getMessagesAndSortContacts() {
         async function fetchData() {
             const response = await PoolPartyApi.getMessages();
-            console.log(response);
+            console.log("response", response);
+            const mergedBoxes = mergeSortedMailboxes(response.inbox, response.outbox);
             setAllMessages({
-                data: response,
+                data: {
+                    ...response,
+                    merged: mergedBoxes
+                },
                 isLoading: false,
             });
             console.log(response.inbox);
@@ -57,19 +63,53 @@ function MailBox() {
 
         for (const message of messages) {
             message.sender_username === user ?
-                contacts.add(message.recipient_username) :
-                contacts.add(message.sender_username);
+                contacts.add(message.sender_username) :
+                contacts.add(message.recipient_username);
         }
         return [...contacts];
     }
 
+    function mergeSortedMailboxes(inboxArr, outboxArr) {
+        let mergedArr = [];
+        let inboxI = 0;
+        let outboxI = 0;
+        while (mergedArr.length < (inboxArr.length + outboxArr.length)) {
+            if (!inboxArr[inboxI]) {
+                mergedArr.push(outboxArr[outboxI]);
+                outboxI++;
+                continue;
+            } else if (!outboxArr[outboxI]) {
+                mergedArr.push(inboxArr[inboxI]);
+                inboxI++;
+                continue;
+            }
+
+            if (inboxArr[inboxI].timestamp < outboxArr[outboxI].timestamp) {
+                mergedArr.push(inboxArr[inboxI]);
+                inboxI++;
+                continue;
+            } else {
+                mergedArr.push(outboxArr[outboxI]);
+                outboxI++;
+                continue;
+            }
+
+        } return mergedArr;
+    }
     //sets the displayed conversation to the selected conversation
     function selectConversation(outsideUser) {
-        const selectedMessages = allMessages.filter(message => (
+        const selectedMessages = allMessages.data.merged.filter(message => (
             message.sender_username === outsideUser ||
             message.recipient_username === outsideUser)
         );
         setDisplayedMessages(selectedMessages);
+    }
+
+    //sets contactType and conversation to the most recent conversation
+    function selectMailboxType(type) {
+        setContactType(type);
+        const typeArr = type === 'inbox' ? inbox : outbox;
+        selectConversation(typeArr[0]);
     }
 
     if (allMessages.isLoading) return <p><LinearProgress /></p>;
@@ -78,43 +118,52 @@ function MailBox() {
         <section className="mailbox">
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={4}>
+                    <h4 style={{ display: "flex", justifyContent: "center" }}>Mailbox</h4>
                     <Box
                         display='flex'
                         gap={.5}
                         justifyContent='flex-start'
                         margin={1.5}
                     >
-                        <Button variant="contained" color="info">inbox</Button>
-                        <Button variant="contained" color="info">outbox</Button>
+                        <Button onClick={() => selectMailboxType('outbox')}
+                            size="small" variant="outlined" color="success">
+                            outbox
+                        </Button>
+                        <Button onClick={() => selectMailboxType('inbox')}
+                            size="small" variant="outlined" color="info">
+                            inbox
+                        </Button>
                     </Box>
                     <ContactList
                         contacts={contactType === "inbox" ? inbox : outbox}
                         selectConversation={selectConversation} />
                 </Grid>
-                <Grid item xs={12} sm={8}>
-                    <MessageList messages={displayedMessages} />
+                <Grid item xs={12} sm={8} >
+                    <Box marginTop={8} marginLeft={1}>
+                        <MessageList messages={displayedMessages} />
+                    </Box>
                 </Grid>
             </Grid>
         </section>
-        // <>
-        //     <h4>Outbox</h4>
-        //     {(messages.data) && messages.data.outbox.map(message => (
-        //         <div key={message.id}>
-        //             <br />
-        //             <p>sender: {message.sender_username}</p>
-        //             <p>recepient: {message.recipient_username}</p>
-        //             <p>message body</p>
-        //             <p>{message.body}</p>
-        //             <p>pool listing: {message.listing}</p>
-        //             <p>message timestamp: {message.timestamp}</p>
-        //         </div>
-
-        //     ))}
-        //     <h4>Inbox</h4>
-        //     {messages.data.map(message => )}
-        // </>
 
     );
 }
 
 export default MailBox;
+// <>
+//     <h4>Outbox</h4>
+//     {(messages.data) && messages.data.outbox.map(message => (
+//         <div key={message.id}>
+//             <br />
+//             <p>sender: {message.sender_username}</p>
+//             <p>recepient: {message.recipient_username}</p>
+//             <p>message body</p>
+//             <p>{message.body}</p>
+//             <p>pool listing: {message.listing}</p>
+//             <p>message timestamp: {message.timestamp}</p>
+//         </div>
+
+//     ))}
+//     <h4>Inbox</h4>
+//     {messages.data.map(message => )}
+// </>

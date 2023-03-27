@@ -44,21 +44,23 @@ function MessageList({ messages }) {
 
     //     </Grid>
 
-    <Grid item xs={12} sm={8}>
+    // <Grid item xs={12} sm={8}>
+    <>
       {messages.map(message => (
         message.sender_username === user.name ?
           <Box display="flex" justifyContent="flex-end">
             <Grid sm={10}>
-              <Message >{message.sender_username}: {message.body}</Message>
+              <Message message={message}></Message>
             </Grid>
           </Box> :
           <Box display="flex" justifyContent="flex-start">
             <Grid sm={10}>
-              <Message >{message.sender_username}: {message.body}</Message>
+              <Message message={message}></Message>
             </Grid>
           </Box>
       ))}
-    </Grid>
+    </>
+    // </Grid>
 
     // </Grid> 
     // </Box>
