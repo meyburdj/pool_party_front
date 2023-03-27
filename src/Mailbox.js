@@ -1,7 +1,10 @@
 import userContext from "./UserContext";
 import PoolPartyApi from "./api";
 import React, { useState, useContext, useEffect } from "react";
-import { Button, LinearProgress, Box } from "@mui/material";
+import {
+    Button, LinearProgress, Box, TextField, Dialog,
+    DialogActions, DialogContent, DialogTitle
+} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import MessageList from "./MessageList";
 import ContactList from "./ContactList";
@@ -112,39 +115,80 @@ function MailBox() {
         selectConversation(typeArr[0]);
     }
 
+    /**Start New Message Modal Logic*/
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    /**End New Message Modal Logic*/
     if (allMessages.isLoading) return <p><LinearProgress /></p>;
 
     return (
-        <section className="mailbox">
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={4}>
-                    <h4 style={{ display: "flex", justifyContent: "center" }}>Mailbox</h4>
-                    <Box
-                        display='flex'
-                        gap={.5}
-                        justifyContent='flex-start'
-                        margin={1.5}
-                    >
-                        <Button onClick={() => selectMailboxType('outbox')}
-                            size="small" variant="outlined" color="success">
-                            outbox
-                        </Button>
-                        <Button onClick={() => selectMailboxType('inbox')}
-                            size="small" variant="outlined" color="info">
-                            inbox
-                        </Button>
-                    </Box>
-                    <ContactList
-                        contacts={contactType === "inbox" ? inbox : outbox}
-                        selectConversation={selectConversation} />
+        <>
+            <section className="mailbox">
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={4}>
+                        <h4 style={{ display: "flex", justifyContent: "center" }}>Contacts</h4>
+                        <Box
+                            display='flex'
+                            gap={.5}
+                            justifyContent='flex-start'
+                            margin={1.5}
+                        >
+                            <Button onClick={() => selectMailboxType('outbox')}
+                                size="small" variant="outlined" color="success">
+                                outbox
+                            </Button>
+                            <Button onClick={() => selectMailboxType('inbox')}
+                                size="small" variant="outlined" color="info">
+                                inbox
+                            </Button>
+                        </Box>
+                        <ContactList
+                            contacts={contactType === "inbox" ? inbox : outbox}
+                            selectConversation={selectConversation} />
+                    </Grid>
+                    <Grid item xs={12} sm={8} >
+                        <h4 style={{ display: "flex", justifyContent: "center" }}>Conversation</h4>
+                        <box style={{ display: "flex", justifyContent: "center" }}>
+                            {(displayedMessages?.length > 0) && <Button onClick={handleClickOpen}
+                                size="small" variant="outlined" color="info" >
+                                new message
+                            </Button>}
+                        </box>
+                        <Box marginLeft={1}>
+                            <MessageList messages={displayedMessages} />
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={8} >
-                    <Box marginTop={8} marginLeft={1}>
-                        <MessageList messages={displayedMessages} />
-                    </Box>
-                </Grid>
-            </Grid>
-        </section>
+            </section >
+            <div>
+
+                <Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth='fullWidth'>
+                    <DialogTitle>New Message</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="New Message"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose}>Send Message</Button>
+                    </DialogActions>
+                </Dialog>
+            </div >
+        </>
 
     );
 }

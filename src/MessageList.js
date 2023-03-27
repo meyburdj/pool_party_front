@@ -32,7 +32,8 @@ function MessageList({ messages }) {
   //   borderColor: 'red',
   //   color: theme.palette.text.secondary
   // }));
-  if (!messages) return <div>hello</div>;
+  console.log("messages in messageList", messages);
+  if (!messages || messages.length === 0) return <div>No messages currently</div>;
   return (
     // <Box sx={{ flexGrow: 1, borderColor: 'primary.main' }}>
     //   <Grid container spacing={2}>

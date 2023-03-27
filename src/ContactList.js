@@ -14,8 +14,8 @@ import ContactButton from "./ContactButton";
  * Mailbox -> ContactList -> ContactButtons
  */
 function ContactList({ contacts, selectConversation }) {
-
-    if (!contacts) return <div>No contacts currently.</div>;
+    console.log("contacts", contacts);
+    if (!contacts || contacts.length === 0) return <div>No contacts currently.</div>;
     return (
         <>
             {contacts.map(contact =>

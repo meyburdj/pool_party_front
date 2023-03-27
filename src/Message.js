@@ -37,19 +37,30 @@ function Message({ message }) {
         textAlign: 'left',
     }));
 
+    function truncateDate(date) {
+        let dateArr = message.timestamp.split(" ").splice(1, 2).reverse().join(" ");
+    }
+
+
+
     return (
         message?.sender_username === user.name ?
             <Box display="flex" justifyContent="flex-start">
                 <Grid sm={10}>
                     <SentMessage >
-                        you: {message.body}
+                        {message?.sender_username}: {message?.body}
                     </SentMessage>
                 </Grid>
             </Box> :
             <Box display="flex" justifyContent="flex-end">
                 <Grid sm={10}>
                     <RecievedMessage >
-                        {message?.sender_username}: {message?.body}
+                        <p>{message.timestamp
+                            .split(" ")
+                            .splice(1, 2)
+                            .reverse()
+                            .join(", ")}</p>
+                        <p>you: {message.body}</p>
                     </RecievedMessage>
                 </Grid>
             </Box>
