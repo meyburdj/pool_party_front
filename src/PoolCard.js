@@ -72,10 +72,19 @@ function PoolCard({ pool }) {
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
+        {/* <LazyLoadImage
+          alt={pool.image_url}
+          src={pool.image_url} // use normal <img> attributes as props
+          height={{height: 40}}
+          // width={image.width}
+        /> */}
+
         <CardMedia
           sx={{ height: 140 }}
-          image={pool.image_url}
-          title={pool.image_url}
+          image={pool.small_image_url}
+          title={pool.small_image_url}
+          component="img"
+          loading="lazy"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
