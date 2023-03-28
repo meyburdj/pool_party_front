@@ -31,8 +31,10 @@ myReservations
 // TODO: frontend README - chris
 // TODO: backend README - chris
 // TODO: finish up messages - flesh out inbox and outbox - Jesse
-// TODO: check for bug // regarding adding form  - Jesse
+// TODO: check for bug // regarding adding form  - chris
 // TODO: setup infinite scroll - Chris
+// TODO: look into changing image files  to WebP and Avif
+
 // TODO: integrtate Reservations Setup - Jesse backend / Chris Frontend
 // TODO: testing -> Goal > 80%
 

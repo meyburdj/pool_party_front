@@ -19,6 +19,15 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PoolPartyApi from "./api";
 
+// import { LazyLoadImage } from "react-lazy-load-image-component";
+
+// import currency from "currency.js";
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+
 
 /**
  * PoolCard: renders an individual pool card.
@@ -72,10 +81,19 @@ function PoolCard({ pool }) {
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
+        {/* <LazyLoadImage
+          alt={pool.image_url}
+          src={pool.image_url} // use normal <img> attributes as props
+          height={{height: 40}}
+          // width={image.width}
+        /> */}
+
         <CardMedia
           sx={{ height: 140 }}
-          image={pool.image_url}
-          title={pool.image_url}
+          image={pool.small_image_url}
+          title={pool.small_image_url}
+          component="img"
+          loading="lazy"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

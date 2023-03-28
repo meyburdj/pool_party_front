@@ -12,18 +12,17 @@ function MyPools() {
     data: null,
     isLoading: true,
   });
-  // const [isLoading, setIsLoading] = useState(true);
-  console.log("pools has been updated to:", pools);
+  // console.log("pools has been updated to:", pools);
   useEffect(function getUsersPools() {
     fetchUsersPoolsFromApi();
   }, []);
 
   async function addPool(newPoolData) {
-    console.log("we are in the addPool function in mypools");
+    setPools(() => ({isLoading: true}));
     const newPool = await PoolPartyApi.createPool(newPoolData);
-    console.log("we have hit the newPool", newPool);
-
-    setPools(() => [...pools, newPool]);
+    setPools(() => [...pools.data, newPool]);
+    setPools(() => ({isLoading: false}));
+    fetchUsersPoolsFromApi();
   }
 
   async function fetchUsersPoolsFromApi() {
@@ -49,7 +48,7 @@ function MyPools() {
       <div>
         <h2>Your Pools</h2>
       </div>
-      {pools.data.length >= 0 && <PoolCardList pools={pools.data} />}
+      {pools.data?.length >= 0 && <PoolCardList pools={pools.data} />}
     </div>
   );
 }
