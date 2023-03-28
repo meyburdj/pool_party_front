@@ -39,12 +39,7 @@ function MyPools() {
     }
   }
 
-  if (pools.isLoading)
-    return (
-      <p>
-        <LinearProgress />
-      </p>
-    );
+  if (pools.isLoading) return <p><LinearProgress /></p>;
 
   return (
     <div>

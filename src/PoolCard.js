@@ -18,14 +18,7 @@ import userContext from "./UserContext";
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PoolPartyApi from "./api";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
-// import currency from "currency.js";
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
 
 /**
  * PoolCard: renders an individual pool card.
@@ -58,9 +51,8 @@ function PoolCard({ pool }) {
   }
 
   async function sendMessage(evt) {
-    // console.log("🚀 ~ file: PoolCard.js:45 ~ sendMessage ~ formDataText", {formDataText})
     evt.preventDefault();
-    //do some api stuff
+
     const data = {
       body: formDataText.body,
       recipient_username: pool.owner_username,
@@ -155,4 +147,3 @@ function PoolCard({ pool }) {
 
 export default PoolCard;
 
-//TODO: add chat function to onClick button. add reserve function to onclick button
