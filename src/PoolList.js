@@ -53,7 +53,7 @@ function PoolList() {
         });
     }
 
-    const cities = ["all", "Los Angeles", "San Francisco", "New York", "Seattle"];
+    const cities = ["all", "Los Angeles", "San Francisco", "New York"];
     if (allPools.isLoading) return <p><LinearProgress /></p>;
 
     return (

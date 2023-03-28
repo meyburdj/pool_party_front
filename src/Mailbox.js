@@ -24,6 +24,7 @@ function MailBox() {
         data: null,
         isLoading: true,
     });
+    console.log("user", user);
     console.log('allMessages', allMessages);
 
     const [displayedMessages, setDisplayedMessages] = useState();
@@ -42,19 +43,21 @@ function MailBox() {
             const response = await PoolPartyApi.getMessages();
             console.log("response", response);
             const mergedBoxes = mergeSortedMailboxes(response.inbox, response.outbox);
-            setAllMessages({
+            const allMessageAtLoad = {
                 data: {
                     ...response,
                     merged: mergedBoxes
                 },
                 isLoading: false,
-            });
+            };
+            setAllMessages(allMessageAtLoad);
             console.log(response.inbox);
             const sortedInbox = sortContactsBasedOnMessages(response.inbox);
             const sortedOutbox = sortContactsBasedOnMessages(response.outbox);
             setInbox(sortedInbox);
             setOutbox(sortedOutbox);
-
+            console.log("sortedOutbox", sortedOutbox);
+            selectConversation(sortedOutbox[0], allMessageAtLoad);
         }
 
         fetchData();
@@ -100,8 +103,8 @@ function MailBox() {
         } return mergedArr;
     }
     //sets the displayed conversation to the selected conversation
-    function selectConversation(outsideUser) {
-        const selectedMessages = allMessages.data.merged.filter(message => (
+    function selectConversation(outsideUser, messages = allMessages) {
+        const selectedMessages = messages.data.merged.filter(message => (
             message.sender_username === outsideUser ||
             message.recipient_username === outsideUser)
         );
@@ -116,7 +119,16 @@ function MailBox() {
     }
 
     /**Start New Message Modal Logic*/
+    const [formDataText, setFormDataText] = useState("");
     const [open, setOpen] = useState(false);
+
+    function handleChange(evt) {
+        const { name, value } = evt.target;
+        setFormDataText((fData) => ({
+            ...fData,
+            [name]: value,
+        }));
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -125,7 +137,24 @@ function MailBox() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    async function sendMessage(evt) {
+        evt.preventDefault();
+        let recepient = displayedMessages[0].sender_username === user.username ?
+            displayedMessages[0].recipient_username :
+            displayedMessages[0].sender_username;
+        const data = {
+            body: formDataText.body,
+            recipient_username: recepient,
+            listing: displayedMessages[0].listing,
+        };
+
+        await PoolPartyApi.sendMessage(data);
+
+        handleClose();
+    }
     /**End New Message Modal Logic*/
+
     if (allMessages.isLoading) return <p><LinearProgress /></p>;
 
     return (
@@ -155,12 +184,12 @@ function MailBox() {
                     </Grid>
                     <Grid item xs={12} sm={8} >
                         <h4 style={{ display: "flex", justifyContent: "center" }}>Conversation</h4>
-                        <box style={{ display: "flex", justifyContent: "center" }}>
+                        <Box style={{ display: "flex", justifyContent: "center" }}>
                             {(displayedMessages?.length > 0) && <Button onClick={handleClickOpen}
                                 size="small" variant="outlined" color="info" >
                                 new message
                             </Button>}
-                        </box>
+                        </Box>
                         <Box marginLeft={1}>
                             <MessageList messages={displayedMessages} />
                         </Box>
@@ -168,8 +197,7 @@ function MailBox() {
                 </Grid>
             </section >
             <div>
-
-                <Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth='fullWidth'>
+                {/* <Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth='fullWidth'>
                     <DialogTitle>New Message</DialogTitle>
                     <DialogContent>
                         <TextField
@@ -185,6 +213,27 @@ function MailBox() {
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
                         <Button onClick={handleClose}>Send Message</Button>
+                    </DialogActions>
+                </Dialog> */}
+                <Dialog open={open} onClose={handleClose} maxWidth='md' fullWidth='fullWidth'>
+                    <DialogTitle>New Message</DialogTitle>
+                    <DialogContent>
+
+                        <TextField
+                            autoFocus
+                            name="body"
+                            margin="dense"
+                            id="name"
+                            label="text"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleChange}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={sendMessage}>Send Message!</Button>
                     </DialogActions>
                 </Dialog>
             </div >

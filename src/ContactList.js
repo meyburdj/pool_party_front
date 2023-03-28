@@ -19,7 +19,7 @@ function ContactList({ contacts, selectConversation }) {
     return (
         <>
             {contacts.map(contact =>
-                <ContactButton contact={contact} selectConversation={selectConversation} />
+                <ContactButton key={`${contact}-btn`} contact={contact} selectConversation={selectConversation} />
             )}
         </>
     );

@@ -49,14 +49,14 @@ function MessageList({ messages }) {
     <>
       {messages.map(message => (
         message.sender_username === user.name ?
-          <Box display="flex" justifyContent="flex-end">
-            <Grid sm={10}>
-              <Message message={message}></Message>
+          <Box display="flex" justifyContent="flex-end" key={`${message.id}-box`}>
+            <Grid item xs={10} key={`${message.id}-grid`}>
+              <Message message={message} key={`${message.id}-message`}></Message>
             </Grid>
           </Box> :
-          <Box display="flex" justifyContent="flex-start">
-            <Grid sm={10}>
-              <Message message={message}></Message>
+          <Box display="flex" justifyContent="flex-start" key={`${message.id}-box`}>
+            <Grid item xs={10} key={`${message.id}-grid`}>
+              <Message message={message} key={`${message.id}-message`}></Message>
             </Grid>
           </Box>
       ))}
@@ -72,4 +72,4 @@ function MessageList({ messages }) {
 export default MessageList;
 
 
-
+;

@@ -29,6 +29,15 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(axios)/)"
+    ],
+    "testEnvironment": "jest-environment-node",
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
