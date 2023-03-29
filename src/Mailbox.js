@@ -68,7 +68,7 @@ function MailBox() {
         let contacts = new Set();
 
         for (const message of messages) {
-            message.sender_username === user ?
+            message.sender_username === user.username ?
                 contacts.add(message.sender_username) :
                 contacts.add(message.recipient_username);
         }
