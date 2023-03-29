@@ -18,8 +18,8 @@ import userContext from "./UserContext";
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PoolPartyApi from "./api";
-
-// import { LazyLoadImage } from "react-lazy-load-image-component";
+<<<<<<<< < Temporary merge branch 1;
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // import currency from "currency.js";
 // import CardActions from '@mui/material/CardActions';
@@ -27,6 +27,7 @@ import PoolPartyApi from "./api";
 // import CardMedia from '@mui/material/CardMedia';
 // import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
+=========
 
 
 /**
