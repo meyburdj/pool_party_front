@@ -17,7 +17,6 @@ import Grid from '@mui/material/Grid';
 
 function Message({ message }) {
     const { user } = useContext(userContext);
-    console.log("message", message);
 
     const RecievedMessage = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,23 +37,28 @@ function Message({ message }) {
     }));
 
     return (
-        message?.sender_username === user.name ?
+        message?.sender_username === user.username ?
             <Box display="flex" justifyContent="flex-start">
                 <Grid item xs={10}>
-                    <SentMessage >
-                        {message?.sender_username}: {message?.body}
-                    </SentMessage>
-                </Grid>
-            </Box> :
-            <Box display="flex" justifyContent="flex-end">
-                <Grid item xs={10}>
-                    <RecievedMessage >
+                    <SentMessage>
+                        <p>{message.sender_username}: {message.body}</p>
                         <p>{message.timestamp
                             .split(" ")
                             .splice(1, 2)
                             .reverse()
                             .join(", ")}</p>
-                        <p>you: {message.body}</p>
+                    </SentMessage>
+                </Grid>
+            </Box> :
+            <Box display="flex" justifyContent="flex-end">
+                <Grid item xs={10}>
+                    <RecievedMessage>
+                        <p>{message.sender_username}: {message.body}</p>
+                        <p>{message.timestamp
+                            .split(" ")
+                            .splice(1, 2)
+                            .reverse()
+                            .join(", ")}</p>
                     </RecievedMessage>
                 </Grid>
             </Box>

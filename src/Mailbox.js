@@ -34,6 +34,9 @@ function MailBox() {
     const [inbox, setInbox] = useState();
 
     const [outbox, setOutbox] = useState();
+
+    const [updateConversation, setUpdateConversation] = useState(false);
+
     console.log("inbox", inbox, "outbox", outbox);
 
     /**effect that requests data concerning messages. Sets messages and sorts by
@@ -66,42 +69,45 @@ function MailBox() {
     //sorts messages by sender and reciever into a set 
     function sortContactsBasedOnMessages(messages) {
         let contacts = new Set();
-
+        console.log('messages', messages);
         for (const message of messages) {
             message.sender_username === user.username ?
-                contacts.add(message.sender_username) :
-                contacts.add(message.recipient_username);
+                contacts.add(message.recipient_username) :
+                contacts.add(message.sender_username);
         }
+        console.log("contacts", [...contacts]);
         return [...contacts];
     }
 
+    //merges two sorted arrays into one sorted array based on string timestamp
     function mergeSortedMailboxes(inboxArr, outboxArr) {
         let mergedArr = [];
         let inboxI = 0;
         let outboxI = 0;
-        while (mergedArr.length < (inboxArr.length + outboxArr.length)) {
-            if (!inboxArr[inboxI]) {
+
+        while (inboxI < inboxArr.length || outboxI < outboxArr.length) {
+            if (inboxI >= inboxArr.length) {
                 mergedArr.push(outboxArr[outboxI]);
                 outboxI++;
-                continue;
-            } else if (!outboxArr[outboxI]) {
+            } else if (outboxI >= outboxArr.length) {
                 mergedArr.push(inboxArr[inboxI]);
                 inboxI++;
-                continue;
-            }
-
-            if (inboxArr[inboxI].timestamp < outboxArr[outboxI].timestamp) {
+            } else if (Date.parse(inboxArr[inboxI].timestamp) > Date.parse(outboxArr[outboxI].timestamp)) {
                 mergedArr.push(inboxArr[inboxI]);
                 inboxI++;
-                continue;
             } else {
                 mergedArr.push(outboxArr[outboxI]);
                 outboxI++;
-                continue;
             }
+        }
 
-        } return mergedArr;
+        return mergedArr;
     }
+
+    // function mergeSortedMailboxes(inboxArr, outboxArr) {
+    //     const mergedArr = inboxArr.concat(outboxArr);
+    //     return mergedArr.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    // }
     //sets the displayed conversation to the selected conversation
     function selectConversation(outsideUser, messages = allMessages) {
         const selectedMessages = messages.data.merged.filter(message => (
@@ -243,20 +249,3 @@ function MailBox() {
 }
 
 export default MailBox;
-// <>
-//     <h4>Outbox</h4>
-//     {(messages.data) && messages.data.outbox.map(message => (
-//         <div key={message.id}>
-//             <br />
-//             <p>sender: {message.sender_username}</p>
-//             <p>recepient: {message.recipient_username}</p>
-//             <p>message body</p>
-//             <p>{message.body}</p>
-//             <p>pool listing: {message.listing}</p>
-//             <p>message timestamp: {message.timestamp}</p>
-//         </div>
-
-//     ))}
-//     <h4>Inbox</h4>
-//     {messages.data.map(message => )}
-// </>
