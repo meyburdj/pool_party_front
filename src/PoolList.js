@@ -1,25 +1,21 @@
 import { useState, useEffect } from "react";
 import PoolCardList from "./PoolCardList";
-// import SearchForm from "./SearchForm";
-import MultiSelectForm from "./MultiSelectForm";
 import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
+import MultiSelectForm from "./MultiSelectForm";
 
-/** // TODO: What does this component do?
- *
- * Props:
- * -
- *
- *
- * State:
- * -
- *
- *  ComponentAbove -> ThisComponent -> ComponentBelow
- */
+//  * Props: NA
+//  * -
+//  *
+//  *
+//  * State: allPools, pools
+//  * -
+//  *
+//  *  RouteList -> PoolList -> [MultiSelectForm, PoolCardList]
+//  */
 
 
 function PoolList() {
-
     const [allPools, setAllPools] = useState({
         data: null,
         isLoading: true,
@@ -27,6 +23,7 @@ function PoolList() {
 
     const [pools, setPools] = useState({
         data: null,
+        city: "all",
     });
 
     useEffect(function getPoolsOnMount() {
@@ -43,13 +40,12 @@ function PoolList() {
 
     function getPoolsByCity(city) {
         let pools;
-        console.log("hi", allPools);
-        console.log(allPools.data.filter(pool => pool.city === city));
-        city === 'all' ?
-            pools = allPools.data :
-            pools = allPools.data.filter(pool => pool.city === city);
+        city === "all"
+            ? (pools = allPools.data)
+            : (pools = allPools.data.filter((pool) => pool.city === city));
         setPools({
-            data: pools
+            data: pools,
+            city: city,
         });
     }
 
@@ -58,14 +54,20 @@ function PoolList() {
 
     return (
         <>
-            <MultiSelectForm label="Cities" options={cities} select={getPoolsByCity} />
-            <div style={{ "display": "flex", "justifyContent": "center" }}>
+            <MultiSelectForm
+                label="Cities"
+                options={cities}
+                select={getPoolsByCity}
+                value={pools.city}
+            />
+            <div style={{ display: "flex", justifyContent: "center" }}>
                 <h2>Join Your Party</h2>
             </div>
-            {!pools.data ?
-                <PoolCardList pools={allPools.data} /> :
+            {!pools.data ? (
+                <PoolCardList pools={allPools.data} />
+            ) : (
                 <PoolCardList pools={pools.data} />
-            }
+            )}
         </>
     );
 }
