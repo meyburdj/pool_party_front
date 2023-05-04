@@ -48,7 +48,7 @@ function MessageList({ messages }) {
     // <Grid item xs={12} sm={8}>
     <>
       {messages.map(message => (
-        message.sender_username === user.name ?
+        message.sender_username !== user.username ?
           <Box display="flex" justifyContent="flex-end" key={`${message.id}-box`}>
             <Grid item xs={10} key={`${message.id}-grid`}>
               <Message message={message} key={`${message.id}-message`}></Message>

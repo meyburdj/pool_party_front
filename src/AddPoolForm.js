@@ -12,19 +12,9 @@ const defaultInitialFormData = {
   image: null,
 };
 
-/**
- *Allows authenticated user to be add a pool
-*
-* Prop: signup - a function passed down that allows the user state to be set and
-for a post to be made creating a User
-*
-* State: formData - allows the component to be controlled.
-* - selectedFile - allows file uploaded to be controlled
- */
 function AddPoolForm({ addPool }) {
   const [formDataText, setFormDataText] = useState(defaultInitialFormData);
   const [selectedFile, setSelectedFile] = useState(null);
-  // const [toast, setToast] = useState({ open: false, msg: null, style: null });
 
   const navigate = useNavigate();
 
@@ -52,7 +42,6 @@ function AddPoolForm({ addPool }) {
     const formDataTextKeys = Object.keys(formDataText);
     formDataTextKeys.map((x) => formData.append(x, formDataText[x]));
 
-    // formData.append("text", formDataText);
     formData.append("file", selectedFile);
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
@@ -63,7 +52,7 @@ function AddPoolForm({ addPool }) {
     // navigate("/");
   }
 
-  const fields = ["rate", "size", "description", "city"];
+  const fields = ["rate", "size", "description"];
 
   return (
     <>
@@ -81,12 +70,24 @@ function AddPoolForm({ addPool }) {
               onChange={handleChange}
             />
           ))}
+          <select
+            id="city-select"
+            name="city"
+            value={formDataText.city}
+            onChange={handleChange}
+          >
+            <option value="">Select a city</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="San Francisco">San Francisco</option>
+            <option value="New York">New York</option>
+          </select>
           <input
             label="image"
             name="image"
             type="file"
             onChange={handleFileInput}
           />
+
           <Button variant="outlined" type="submit">
             Add Pool!
           </Button>
