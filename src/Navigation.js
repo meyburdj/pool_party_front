@@ -29,13 +29,13 @@ function NavBar({ logout }) {
           </label>
           <ul>
             <li>
-              <Link to="/" onClick={() => setIsChecked(false)}>Pools</Link>
+              <Link to="/" onClick={() => setIsChecked(false)}>Find Pools</Link>
             </li>
             <li>
-              <Link to="/messages" onClick={() => setIsChecked(false)}>Messages</Link>
+              <Link to="/messages" onClick={() => setIsChecked(false)}>Your Messages</Link>
             </li>
             <li>
-              <Link to="/reservations" onClick={() => setIsChecked(false)}>Reservation</Link>
+              <Link to="/memberships" onClick={() => setIsChecked(false)}>Joined Parties</Link>
             </li>
             <li>
               <Link to="/mypools" onClick={() => setIsChecked(false)}>My Pools</Link>

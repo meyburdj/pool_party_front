@@ -191,7 +191,7 @@ class PoolPartyApi {
         */
     static async createReservation({ pool_id, start_date, end_date }) {
         const res = await this.request(
-            `/api/reservations/${pool_id}`,
+            `reservations/${pool_id}`,
             { start_date, end_date },
             "post");
 
@@ -232,6 +232,16 @@ class PoolPartyApi {
         const res = await this.request(`reservations/${reservation_id}`);
 
         return res.reservations;
+    }
+
+    static async deleteBookedReservation(reservation_id) {
+        const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
+        return res;
+    }
+
+    static async deleteBookedReservation(reservation_id) {
+        const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
+        return res;
     }
 
 

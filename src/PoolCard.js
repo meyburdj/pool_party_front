@@ -19,16 +19,6 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PoolPartyApi from "./api";
 
-// import { LazyLoadImage } from "react-lazy-load-image-component";
-
-// import currency from "currency.js";
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-
-
 
 /**
  * PoolCard: renders an individual pool card.
@@ -42,6 +32,7 @@ import PoolPartyApi from "./api";
  */
 
 function PoolCard({ pool }) {
+  console.log("pool from poolcard", pool);
   const { user } = useContext(userContext);
   const linkStyle = { textDecoration: "none", color: "white" };
   const [open, setOpen] = useState(false);
@@ -75,8 +66,43 @@ function PoolCard({ pool }) {
     handleClose();
   }
 
-  function handleReserve(evt) {
-    reserved ? setReserved(null) : setReserved({ color: "green" });
+  // function handleReserve(evt) {
+  //   reserved ? setReserved(null) : setReserved({ color: "green" });
+  // }
+
+  async function handleReserve(evt) {
+    if (!reserved) {
+      try {
+        // Send the reservation request
+        await PoolPartyApi.createReservation({
+          pool_id: pool.id,
+          start_date: null, // Replace with actual value when available
+          end_date: null, // Replace with actual value when available
+        });
+        setReserved({ color: "green" });
+      } catch (err) {
+        console.error("Reservation error:", err);
+        // Handle error (e.g., show error message to the user)
+      }
+    } else {
+      try {
+        // Find the reservation_id of the user's reservation
+        const reservations = await PoolPartyApi.getReservationsByUsername(user.username);
+        const reservation = reservations.find((r) => r.pool_id === pool.id && r.booked_username === user.username);
+
+        if (reservation) {
+          // Send the delete reservation request
+          await PoolPartyApi.deleteBookedReservation(reservation.id);
+          setReserved(null);
+        } else {
+          console.error("Reservation not found for user");
+          // Handle error (e.g., show error message to the user)
+        }
+      } catch (err) {
+        console.error("Delete reservation error:", err);
+        // Handle error (e.g., show error message to the user)
+      }
+    }
   }
 
   return (
@@ -98,7 +124,7 @@ function PoolCard({ pool }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {pool.size.toUpperCase()} pool in {pool.city.toUpperCase()}
+            {pool.size} pool in {pool.city}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {pool.description}
