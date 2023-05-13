@@ -12,6 +12,20 @@ const defaultInitialFormData = {
   image: null,
 };
 
+/**
+ * AddPoolForm: Form for adding a pool to database.
+ *
+ * Props:
+ * -addPool(): function propdrilled from App that sends a post request 
+ * 
+ * State: 
+ * -formDataText: text entered into form fields
+ * -selectedFile: file data added to formData
+ *
+ * Component tree:
+ * -MyPools -> AddPoolForm
+ */
+
 function AddPoolForm({ addPool }) {
   const [formDataText, setFormDataText] = useState(defaultInitialFormData);
   const [selectedFile, setSelectedFile] = useState(null);

@@ -8,8 +8,11 @@ import ContactButton from "./ContactButton";
 /**
  * ContactList: component for list of contact buttons
  * 
- * Props: contacts, selectConversation()
- * State: none
+ * Props: 
+ * - contacts 
+ * - selectConversation()
+ * 
+ * State: NA
  * 
  * Mailbox -> ContactList -> ContactButtons
  */

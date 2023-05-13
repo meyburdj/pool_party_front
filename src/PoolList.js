@@ -4,7 +4,7 @@ import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
 import MultiSelectForm from "./MultiSelectForm";
 
-//  * Props: NA
+//  * Props: addReservation, removeReservation
 //  * -
 //  *
 //  *
@@ -15,7 +15,7 @@ import MultiSelectForm from "./MultiSelectForm";
 //  */
 
 
-function PoolList() {
+function PoolList({ addReservation, removeReservation }) {
     const [allPools, setAllPools] = useState({
         data: null,
         isLoading: true,
@@ -64,9 +64,11 @@ function PoolList() {
                 <h2>Join Your Party</h2>
             </div>
             {!pools.data ? (
-                <PoolCardList pools={allPools.data} />
+                <PoolCardList pools={allPools.data}
+                    addReservation={addReservation} removeReservation={removeReservation} />
             ) : (
-                <PoolCardList pools={pools.data} />
+                <PoolCardList pools={pools.data}
+                    addReservation={addReservation} removeReservation={removeReservation} />
             )}
         </>
     );

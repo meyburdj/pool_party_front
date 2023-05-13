@@ -16,11 +16,11 @@ import ReservationList from "./ReservationList";
 /**
  * RoutesList: renders individual Route components
  *
- * Props: N/A
+ * Props: signup, login, addReservation, removeReservation
  *
  * State: N/A
  */
-function RoutesList({ signup, login }) {
+function RoutesList({ signup, login, addReservation, removeReservation }) {
     const { user } = useContext(userContext);
 
     return (
@@ -36,8 +36,10 @@ function RoutesList({ signup, login }) {
 
                 {user && (
                     <>
-                        <Route path="/" element={<PoolList />} />
-                        <Route path="/memberships" element={<ReservationList />} />
+                        <Route path="/" element={<PoolList
+                            addReservation={addReservation} removeReservation={removeReservation} />} />
+                        <Route path="/memberships" element={<ReservationList
+                            addReservation={addReservation} removeReservation={removeReservation} />} />
                         <Route path="/mypools" element={<MyPools />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/messages" element={<Mailbox />} />

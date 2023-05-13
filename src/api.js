@@ -195,7 +195,7 @@ class PoolPartyApi {
             { start_date, end_date },
             "post");
 
-        return res.token;
+        return res;
     }
 
     /**
@@ -235,14 +235,15 @@ class PoolPartyApi {
     }
 
     static async deleteBookedReservation(reservation_id) {
+        console.log("resId", reservation_id);
         const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
         return res;
     }
 
-    static async deleteBookedReservation(reservation_id) {
-        const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
-        return res;
-    }
+    // static async deleteBookedReservation(reservation_id) {
+    //     const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
+    //     return res;
+    // }
 
 
 

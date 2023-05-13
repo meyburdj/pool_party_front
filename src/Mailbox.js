@@ -11,8 +11,15 @@ import ContactList from "./ContactList";
 /**
  * Mailbox: Parent component for Messages and Contacts
  * 
- * Props: 
- * state: user, allMessages, inbox, outbox
+ * Props: NA
+ * 
+ * State: 
+ * - user: Derived from context. Contains user information.
+ * - allMessages: Array of all messages sent or recieved to current user.
+ * - inbox: Set of all users that have ever sent a message to current user.
+ * - outbox: Set of all users that have ever recieved a message from current user.
+ * - displayedMessages: Array of all messages recieved and sent to selected contact,
+ *      ordered by time
  * 
  * Mailbox -> MessageList -> [Message, Message, ...]
  * Mailbox -> ConactList -> [Contact, Contact, ...]
@@ -36,8 +43,6 @@ function MailBox() {
     const [outbox, setOutbox] = useState();
 
     const [updateConversation, setUpdateConversation] = useState(false);
-
-    console.log("inbox", inbox, "outbox", outbox);
 
     /**effect that requests data concerning messages. Sets messages and sorts by
        contacts so that inbox/outbox state is sorted and with unique entries*/
@@ -124,7 +129,7 @@ function MailBox() {
         selectConversation(typeArr[0]);
     }
 
-    /**Start New Message Modal Logic*/
+    /*****Start New Message Modal Logic*****/
     const [formDataText, setFormDataText] = useState("");
     const [open, setOpen] = useState(false);
 
@@ -159,7 +164,7 @@ function MailBox() {
 
         handleClose();
     }
-    /**End New Message Modal Logic*/
+    /*****End New Message Modal Logic*****/
 
     if (allMessages.isLoading) return <p><LinearProgress /></p>;
 

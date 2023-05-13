@@ -8,14 +8,18 @@ import Grid2 from '@mui/material/Unstable_Grid2';
  *
  * Props:
  * - pools: list of pool objects
+ * -addReservation
+ * -removeReservation 
+ * addReservation={addReservation} removeReservation={removeReservation}
  *
  *  PoolList -> PoolCardList -> [PoolCard,PoolCard,...]
  */
-function PoolCardList({ pools }) {
+function PoolCardList({ pools, addReservation, removeReservation }) {
 
     const poolList = pools.map(pool => (
         <Grid2 key={`${pool.id}-grid`} xs={6} md={4}>
-            <PoolCard key={pool.id} pool={pool} />
+            <PoolCard key={pool.id} pool={pool}
+                addReservation={addReservation} removeReservation={removeReservation} />
         </Grid2>
     ));
 

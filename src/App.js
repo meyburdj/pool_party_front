@@ -13,7 +13,8 @@ import jwt_decode from "jwt-decode";
 import userContext from "./UserContext";
 
 /**
- * App: it's an App! Parent component for entire ShareBNB application.
+ * Core function for Pool Party app. Is where user state is fed to context and 
+ * where user is created via api calls to backend. 
  */
 function App() {
   const [user, setUser] = useState(null);
@@ -43,12 +44,14 @@ function App() {
           const { email, location } = await PoolPartyApi.fetchUserData(
             username
           );
-
-          const newUser = { username, email, location };
+          const reservations = await PoolPartyApi.getReservationsByUsername(username);
+          const reservationIds = reservations.map(reservation => reservation.pool_id);
+          const newUser = { username, email, location, reservations, reservationIds };
 
           setUser(newUser);
           console.log("made it to end of try");
         } catch (err) {
+
           console.log("got an error: ", err);
           setToast({ open: true, msg: err[0] });
         } finally {
@@ -106,6 +109,35 @@ function App() {
     }));
   }
 
+  /**creates a reservation. drilled down to PoolCard */
+  async function addReservation(pool) {
+    const response = await PoolPartyApi.createReservation({
+      pool_id: pool.id,
+      start_date: null,
+      end_date: null,
+    });
+    console.log("response", response);
+    setUser({
+      username: user.username,
+      email: user.email,
+      location: user.location,
+      reservations: [...user.reservations, response.reservation],
+      reservationIds: [...user.reservationIds, response.reservation.pool_id]
+    });
+  }
+
+  /**Removes a reservation. drilled down to PoolCard */
+  async function removeReservation(reservationId, poolId) {
+    await PoolPartyApi.deleteBookedReservation(reservationId);
+    setUser({
+      username: user.username,
+      email: user.email,
+      location: user.location,
+      reservations: user.reservations.filter(res => res.id !== reservationId),
+      reservationIds: user.reservationIds.filter(pool => pool !== poolId),
+    });
+  }
+
   /**
    * function that sets user to null, removes PoolPartyApi token, effectively
    * logging them out from the application
@@ -133,6 +165,8 @@ function App() {
     setPools(pools);
   }
 
+
+
   if (isLoading) return <p><LinearProgress /></p>;
 
   return (
@@ -141,7 +175,8 @@ function App() {
         <userContext.Provider value={{ user: user }}>
           <Navigation logout={logout} />
           <div className="Background">
-            <RoutesList signup={signup} login={login} />
+            <RoutesList signup={signup} login={login}
+              addReservation={addReservation} removeReservation={removeReservation} />
           </div>
         </userContext.Provider>
       </BrowserRouter>
