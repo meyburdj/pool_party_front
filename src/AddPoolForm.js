@@ -23,7 +23,7 @@ const defaultInitialFormData = {
  * -selectedFile: file data added to formData
  *
  * Component tree:
- * -MyPools -> AddPoolForm
+ *  MyPools -> AddPoolForm
  */
 
 function AddPoolForm({ addPool }) {

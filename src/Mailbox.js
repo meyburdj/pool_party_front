@@ -8,6 +8,7 @@ import {
 import Grid from "@mui/material/Grid";
 import MessageList from "./MessageList";
 import ContactList from "./ContactList";
+
 /**
  * Mailbox: Parent component for Messages and Contacts
  * 
@@ -21,8 +22,9 @@ import ContactList from "./ContactList";
  * - displayedMessages: Array of all messages recieved and sent to selected contact,
  *      ordered by time
  * 
- * Mailbox -> MessageList -> [Message, Message, ...]
- * Mailbox -> ConactList -> [Contact, Contact, ...]
+ * Component tree:
+ *  Mailbox -> MessageList -> [Message, Message, ...]
+ *  Mailbox -> ConactList -> [Contact, Contact, ...]
  * 
  */
 function MailBox() {

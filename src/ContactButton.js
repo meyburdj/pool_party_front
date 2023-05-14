@@ -8,7 +8,8 @@ import Button from "@mui/material/Button";
  * Props: 
  * - contact: username of user that has been sent or recieved a message from 
  *      current user
- * - selectConversation(): prop drilled from Mailbox to ContactButton. Creates an array of messages between current user and contact, sorted by date.
+ * - selectConversation(): prop drilled from Mailbox to ContactButton. Creates 
+ *      an array of messages between current user and contact, sorted by date.
  * 
  * State: NA
  * 

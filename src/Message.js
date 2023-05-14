@@ -9,10 +9,14 @@ import Grid from '@mui/material/Grid';
 /**
  * Message: component for individual message
  * 
- * Props: User, message, 
- * State: none
+ * Props: 
+ * - message: Object with individual message data
  * 
- * Mailbox -> MessageList -> Message 
+ * State: 
+ * - User: Derived from context. Contains user information. 
+ * 
+ * Component tree:
+ *  Mailbox -> MessageList -> Message 
  */
 
 function Message({ message }) {

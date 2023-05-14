@@ -6,22 +6,36 @@ import { LinearProgress } from "@mui/material";
 import PoolCardList from "./PoolCardList";
 import AddPoolForm from "./AddPoolForm";
 
+/**
+ * MyPools: Component that displays pools uploaded by current user and form to add 
+ *  new pools
+ *
+ * Props:
+ * -addPool(): function propdrilled from App that sends a post request 
+ * 
+ * State: 
+ * -formDataText: text entered into form fields
+ * -selectedFile: file data added to formData
+ *
+ * Component tree:
+ *  MyPools -> AddPoolForm
+ */
 function MyPools() {
   const { user } = useContext(userContext);
   const [pools, setPools] = useState({
     data: null,
     isLoading: true,
   });
-  // console.log("pools has been updated to:", pools);
+
   useEffect(function getUsersPools() {
     fetchUsersPoolsFromApi();
   }, []);
 
   async function addPool(newPoolData) {
-    setPools(() => ({isLoading: true}));
+    setPools(() => ({ isLoading: true }));
     const newPool = await PoolPartyApi.createPool(newPoolData);
     setPools(() => [...pools.data, newPool]);
-    setPools(() => ({isLoading: false}));
+    setPools(() => ({ isLoading: false }));
     fetchUsersPoolsFromApi();
   }
 
@@ -44,7 +58,6 @@ function MyPools() {
   return (
     <div>
       <AddPoolForm addPool={addPool} />
-      {/* {pools.length === 0 && <h4>Add your pools!</h4>} */}
       <div>
         <h2>Your Pools</h2>
       </div>

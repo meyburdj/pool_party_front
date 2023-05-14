@@ -9,12 +9,15 @@ import ContactButton from "./ContactButton";
  * ContactList: component for list of contact buttons
  * 
  * Props: 
- * - contacts 
- * - selectConversation()
+ * - contacts: Array of users that current user has either recieved messages from
+ *      or sent messages to
+ * - selectConversation(): prop drilled from Mailbox to ContactButton. Creates 
+ *      an array of messages between current user and contact, sorted by date.
  * 
  * State: NA
  * 
- * Mailbox -> ContactList -> ContactButtons
+ * Component tree:
+ *  Mailbox -> ContactList -> ContactButtons
  */
 function ContactList({ contacts, selectConversation }) {
     console.log("contacts", contacts);

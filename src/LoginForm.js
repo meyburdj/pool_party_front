@@ -13,9 +13,14 @@ const defaultInitialFormData = {
 /**
  *Allows user to login and recieve a JWT
  *
- * Prop: login - a function passed down that allows the user state to be set
+ * Prop: 
+ * - login: Function passed down that allows the user state to be set
  *
- * State: formData allows the component to be controlled.
+ * State: 
+ * - formData: controls inputs to text fields.
+ * 
+ * Component tree:
+ *  RouteList -> LoginForm
  */
 function LoginForm({ login }) {
   const [formData, setFormData] = useState(defaultInitialFormData);
