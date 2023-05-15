@@ -3,6 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import userContext from "./UserContext";
 import "./NavBar.css";
 
+/**
+ * NavBar: HTML/CSS navbar with hamburger
+ *
+ * Props:
+ * -logout(): function propdrilled from App that clears the JWT from local storage
+ */
 function NavBar({ logout }) {
   const { user } = useContext(userContext);
   const [isChecked, setIsChecked] = useState(false);
@@ -29,13 +35,13 @@ function NavBar({ logout }) {
           </label>
           <ul>
             <li>
-              <Link to="/" onClick={() => setIsChecked(false)}>Pools</Link>
+              <Link to="/" onClick={() => setIsChecked(false)}>Find Pools</Link>
             </li>
             <li>
-              <Link to="/messages" onClick={() => setIsChecked(false)}>Messages</Link>
+              <Link to="/messages" onClick={() => setIsChecked(false)}>Your Messages</Link>
             </li>
             <li>
-              <Link to="/reservations" onClick={() => setIsChecked(false)}>Reservation</Link>
+              <Link to="/memberships" onClick={() => setIsChecked(false)}>Joined Parties</Link>
             </li>
             <li>
               <Link to="/mypools" onClick={() => setIsChecked(false)}>My Pools</Link>

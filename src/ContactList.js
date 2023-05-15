@@ -1,17 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import ContactButton from "./ContactButton";
 
 /**
  * ContactList: component for list of contact buttons
  * 
- * Props: contacts, selectConversation()
- * State: none
+ * Props: 
+ * - contacts: Array of users that current user has either recieved messages from
+ *      or sent messages to
+ * - selectConversation(): prop drilled from Mailbox to ContactButton. Creates 
+ *      an array of messages between current user and contact, sorted by date.
  * 
- * Mailbox -> ContactList -> ContactButtons
+ * State: NA
+ * 
+ * Component tree:
+ *  Mailbox -> ContactList -> ContactButtons
  */
 function ContactList({ contacts, selectConversation }) {
     console.log("contacts", contacts);

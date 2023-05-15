@@ -2,7 +2,7 @@ import { TextField, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import camelCase from "lodash/camelCase";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const defaultInitialFormData = {
   rate: "",
@@ -12,11 +12,23 @@ const defaultInitialFormData = {
   image: null,
 };
 
+/**
+ * AddPoolForm: Form for adding a pool to database.
+ *
+ * Props:
+ * -addPool(): function propdrilled from App that sends a post request 
+ * 
+ * State: 
+ * -formDataText: text entered into form fields
+ * -selectedFile: file data added to formData
+ *
+ * Component tree:
+ *  MyPools -> AddPoolForm
+ */
+
 function AddPoolForm({ addPool }) {
   const [formDataText, setFormDataText] = useState(defaultInitialFormData);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const navigate = useNavigate();
 
   /** Update form text input. */
   function handleChange(evt) {
@@ -49,7 +61,6 @@ function AddPoolForm({ addPool }) {
     await addPool(formData);
 
     setFormDataText(defaultInitialFormData);
-    // navigate("/");
   }
 
   const fields = ["rate", "size", "description"];

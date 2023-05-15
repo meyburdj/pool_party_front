@@ -4,18 +4,21 @@ import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
 import MultiSelectForm from "./MultiSelectForm";
 
-//  * Props: NA
-//  * -
-//  *
-//  *
-//  * State: allPools, pools
-//  * -
-//  *
-//  *  RouteList -> PoolList -> [MultiSelectForm, PoolCardList]
-//  */
-
-
-function PoolList() {
+/**
+ * PoolList: component that displays pools for user to search along with a filter
+ * 
+ * Props:
+ *  -addReservation: propdrilled from App to PoolCard
+ *  -removeReservation: propdrilled from App to PoolCard
+ * 
+ * State:
+ *  -allPools: all pools in db
+ *  -pools: selected pools for display based on filters
+ * 
+ * Component tree:
+ *  RouteList -> PoolList -> [MultiSelectForm, PoolCardList]
+**/
+function PoolList({ addReservation, removeReservation }) {
     const [allPools, setAllPools] = useState({
         data: null,
         isLoading: true,
@@ -64,9 +67,11 @@ function PoolList() {
                 <h2>Join Your Party</h2>
             </div>
             {!pools.data ? (
-                <PoolCardList pools={allPools.data} />
+                <PoolCardList pools={allPools.data}
+                    addReservation={addReservation} removeReservation={removeReservation} />
             ) : (
-                <PoolCardList pools={pools.data} />
+                <PoolCardList pools={pools.data}
+                    addReservation={addReservation} removeReservation={removeReservation} />
             )}
         </>
     );

@@ -2,7 +2,7 @@ import { TextField, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import camelCase from "lodash/camelCase";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 
@@ -15,12 +15,15 @@ const defaultInitialFormData = {
 };
 
 /**
- *Allows user to be created and recieve a JWT
+ *SignupForm: Allows user to be created and recieve a JWT
 *
-* Prop: signup - a function passed down that allows the user state to be set and
+* Props: 
+ -signup: Function propdrilled from App. Allows the user state to be set and
 for a post to be made creating a User
 *
-* State: formData allows the component to be controlled.
+* State: 
+* -formData: allows the component to be controlled.
+* -selectFile: dataFile for images 
 *
 *
  */
@@ -28,9 +31,8 @@ function SignupForm({ signup }) {
 
     const [formDataText, setFormDataText] = useState(defaultInitialFormData);
     const [selectedFile, setSelectedFile] = useState(null);
-    // const [toast, setToast] = useState({ open: false, msg: null, style: null });
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     /** Update form text input. */
     function handleChange(evt) {
@@ -54,7 +56,7 @@ function SignupForm({ signup }) {
 
         const formData = new FormData();
         const formDataTextKeys = Object.keys(formDataText);
-        formDataTextKeys.map(x => formData.append(x,formDataText[x]))
+        formDataTextKeys.map(x => formData.append(x, formDataText[x]));
 
 
         // formData.append("text", formDataText);

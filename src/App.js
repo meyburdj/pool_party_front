@@ -6,21 +6,25 @@ import Navigation from "./Navigation";
 import { useState, useEffect } from "react";
 import PoolPartyApi from "./api";
 // import userContext from "./userContext";
-import { TextField, Button, LinearProgress } from "@mui/material";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import { LinearProgress } from "@mui/material";
 import jwt_decode from "jwt-decode";
 import userContext from "./UserContext";
 
 /**
- * App: it's an App! Parent component for entire ShareBNB application.
+ * App: Primary app level logic for Pool Party application
+ * 
+ * Props: NA
+ * 
+ * State:
+ * -user: user information based off of the jwt and login credentials. Contains
+ *  reservations and is passed into userContext provider
+ * -token: JWT with username payload and signature from backend
+ * 
  */
 function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("sharebnbToken"));
-  const [toast, setToast] = useState({ open: false, msg: null });
   const [isLoading, setIsLoading] = useState(true);
-  const [pools, setPools] = useState();
 
   /**
    * effect triggered on change of token state. Checks localStorage for token.
@@ -31,7 +35,6 @@ function App() {
       async function fetchUserDataFromApi() {
         console.log("UseEffect token: ", token);
         PoolPartyApi.token = token;
-        // PoolPartyApi.token = token;
         const { username } = jwt_decode(token);
         console.log(
           "🚀 ~ file: App.js:32 ~ fetchUserDataFromApi ~ username",
@@ -39,33 +42,26 @@ function App() {
         );
 
         try {
-          console.log("starting try block");
           const { email, location } = await PoolPartyApi.fetchUserData(
             username
           );
-
-          const newUser = { username, email, location };
+          const reservations = await PoolPartyApi.getReservationsByUsername(username);
+          const reservationIds = reservations.map(reservation => reservation.pool_id);
+          const newUser = { username, email, location, reservations, reservationIds };
 
           setUser(newUser);
-          console.log("made it to end of try");
         } catch (err) {
-          console.log("got an error: ", err);
-          setToast({ open: true, msg: err[0] });
+
+          console.log("error: ", err);
+          // setToast({ open: true, msg: err[0] });
         } finally {
-          console.log("finally statement");
           setIsLoading(false);
         }
       }
       if (token) {
         fetchUserDataFromApi();
         localStorage.setItem("sharebnbToken", token);
-        console.log("setting token for local storage to: ", token);
-        console.log(
-          "localStorage token",
-          localStorage.getItem("sharebnbToken")
-        );
       } else {
-        console.log("setting loading to false");
         setIsLoading(false);
       }
     },
@@ -93,17 +89,46 @@ function App() {
     setToken(newToken);
   }
 
-  /**
-   * updateProfile function makes api call to "/users/:username".
-   */
-  async function updateProfile(data) {
-    const { username, email, location } = await PoolPartyApi.updateUser(data);
+  // /**
+  //  * updateProfile function makes api call to "/users/:username".
+  //  */
+  // async function updateProfile(data) {
+  //   const { username, email, location } = await PoolPartyApi.updateUser(data);
 
-    setUser((curr) => ({
-      username,
-      email,
-      location,
-    }));
+  //   setUser((curr) => ({
+  //     username,
+  //     email,
+  //     location,
+  //   }));
+  // }
+
+  /**creates a reservation. drilled down to PoolCard */
+  async function addReservation(pool) {
+    const response = await PoolPartyApi.createReservation({
+      pool_id: pool.id,
+      start_date: null,
+      end_date: null,
+    });
+    console.log("response", response);
+    setUser({
+      username: user.username,
+      email: user.email,
+      location: user.location,
+      reservations: [...user.reservations, response.reservation],
+      reservationIds: [...user.reservationIds, response.reservation.pool_id]
+    });
+  }
+
+  /**Removes a reservation. drilled down to PoolCard */
+  async function removeReservation(reservationId, poolId) {
+    await PoolPartyApi.deleteBookedReservation(reservationId);
+    setUser({
+      username: user.username,
+      email: user.email,
+      location: user.location,
+      reservations: user.reservations.filter(res => res.id !== reservationId),
+      reservationIds: user.reservationIds.filter(pool => pool !== poolId),
+    });
   }
 
   /**
@@ -117,21 +142,23 @@ function App() {
     localStorage.removeItem("sharebnbToken");
   }
 
-  useEffect(function getPools() {
-    search();
-  }, []);
+  // useEffect(function getPools() {
+  //   search();
+  // }, []);
 
-  /** Search function  */
-  async function search(nameLike) {
-    if (nameLike !== undefined) {
-      nameLike = nameLike.trim();
-    }
-    if (nameLike === "") {
-      nameLike = undefined;
-    }
-    const pools = await PoolPartyApi.getPools(nameLike);
-    setPools(pools);
-  }
+  // /** Search function  */
+  // async function search(nameLike) {
+  //   if (nameLike !== undefined) {
+  //     nameLike = nameLike.trim();
+  //   }
+  //   if (nameLike === "") {
+  //     nameLike = undefined;
+  //   }
+  //   const pools = await PoolPartyApi.getPools(nameLike);
+  //   setPools(pools);
+  // }
+
+
 
   if (isLoading) return <p><LinearProgress /></p>;
 
@@ -141,7 +168,8 @@ function App() {
         <userContext.Provider value={{ user: user }}>
           <Navigation logout={logout} />
           <div className="Background">
-            <RoutesList signup={signup} login={login} />
+            <RoutesList signup={signup} login={login}
+              addReservation={addReservation} removeReservation={removeReservation} />
           </div>
         </userContext.Provider>
       </BrowserRouter>

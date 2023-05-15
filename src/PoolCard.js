@@ -5,29 +5,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Box,
   Card,
   CardContent,
   CardActions,
   CardMedia,
   Button,
   Typography,
-  Modal,
 } from "@mui/material";
 import userContext from "./UserContext";
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PoolPartyApi from "./api";
-
-// import { LazyLoadImage } from "react-lazy-load-image-component";
-
-// import currency from "currency.js";
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-
 
 
 /**
@@ -35,23 +23,29 @@ import PoolPartyApi from "./api";
  *
  * Props:
  * - pool: object for a single pool
+ * -addReservation(): prop drilled from App. Adds a reservation and updates user
+ * -removeReservation(): prop drilled from App. Removes a reservation and updates user
  *
- * State: N/A
+ * State: 
+ * -open: state of message modal
+ * -formDataText: message inside message modal
  *
- * PoolCardList -> [PooLCard, PooLCard, ... ]
+ * Component tree:
+ *  PoolCardList -> [PooLCard, PooLCard, ... ]
  */
 
-function PoolCard({ pool }) {
+function PoolCard({ pool, addReservation, removeReservation }) {
   const { user } = useContext(userContext);
-  const linkStyle = { textDecoration: "none", color: "white" };
   const [open, setOpen] = useState(false);
-  const [reserved, setReserved] = useState();
   const [formDataText, setFormDataText] = useState("");
+
+  const linkStyle = { textDecoration: "none", color: "white" };
+  const reserveIds = new Set(user?.reservationIds);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  /** Update form text input. */
+  /******Message modal related logic start ******/
   function handleChange(evt) {
     const { name, value } = evt.target;
     setFormDataText((fData) => ({
@@ -68,27 +62,45 @@ function PoolCard({ pool }) {
       recipient_username: pool.owner_username,
       listing: pool.id,
     };
-
-    console.log("🚀 ~ file: PoolCard.js:69 ~ sendMessage ~ data", data);
     await PoolPartyApi.sendMessage(data);
 
     handleClose();
   }
+  /******Message modal related logic end ******/
 
-  function handleReserve(evt) {
-    reserved ? setReserved(null) : setReserved({ color: "green" });
+  /******Reservation button related logic start ******/
+  const reserveData = {
+    style: { color: 'green' },
+    message: "Join the party!"
+  };
+  const unReserveData = {
+    style: { color: 'red' },
+    message: "Leave the party!"
+  };
+
+  async function handleReserve(evt) {
+    if (!reserveIds.has(pool.id)) {
+      try {
+        addReservation(pool);
+
+      } catch (err) {
+        console.error("Reservation error:", err);
+      }
+    } else {
+      try {
+        const reservationId = user.reservations.filter(reservation => reservation.pool_id === pool.id)[0].id;
+        await removeReservation(reservationId, pool.id);
+
+      } catch (err) {
+        console.error("Delete reservation error:", err);
+      }
+    }
   }
+  /******Reservation button related logic end ******/
 
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
-        {/* <LazyLoadImage
-          alt={pool.image_url}
-          src={pool.image_url} // use normal <img> attributes as props
-          height={{height: 40}}
-          // width={image.width}
-        /> */}
-
         <CardMedia
           sx={{ height: 140 }}
           image={pool.small_image_url}
@@ -98,7 +110,7 @@ function PoolCard({ pool }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {pool.size.toUpperCase()} pool in {pool.city.toUpperCase()}
+            {pool.size} pool in {pool.city}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {pool.description}
@@ -109,8 +121,8 @@ function PoolCard({ pool }) {
             <Button onClick={handleOpen} size="small">
               Chat with Host
             </Button>
-            <Button onClick={handleReserve} style={reserved} size="small">
-              Join the Party!
+            <Button onClick={handleReserve} style={reserveIds.has(pool.id) ? unReserveData.style : reserveData.style} size="small">
+              {reserveIds.has(pool.id) ? unReserveData.message : reserveData.message}
             </Button>
           </CardActions>
         )}
