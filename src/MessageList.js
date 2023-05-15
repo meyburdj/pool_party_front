@@ -1,9 +1,6 @@
 import userContext from "./UserContext";
-import PoolPartyApi from './api';
-import React, { useState, useContext, useEffect } from "react";
-import { styled } from '@mui/material/styles';
+import React, { useContext } from "react";
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Message from "./Message";
 

@@ -1,9 +1,10 @@
 import { TextField, Button } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useState, forwardRef } from "react";
+import { useState } from "react";
+// import { useState, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+// import Snackbar from "@mui/material/Snackbar";
+// import MuiAlert from "@mui/material/Alert";
 
 const defaultInitialFormData = {
   username: "",
@@ -24,7 +25,7 @@ const defaultInitialFormData = {
  */
 function LoginForm({ login }) {
   const [formData, setFormData] = useState(defaultInitialFormData);
-  const [toast, setToast] = useState({ open: false, msg: null, style: null });
+  // const [toast, setToast] = useState({ open: false, msg: null, style: null });
 
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ function LoginForm({ login }) {
       // setToast({ open: true, msg: "Logged in!", style: "success" });
     } catch (err) {
       console.log(err);
-      setToast({ open: true, msg: err[0], style: "error" });
+      // setToast({ open: true, msg: err[0], style: "error" });
       return;
     }
 
@@ -56,16 +57,16 @@ function LoginForm({ login }) {
 
   /******** SNACKBAR START *******/
 
-  function handleClose(event, reason) {
-    if (reason === "clickaway") {
-      return;
-    }
-    setToast({ open: false, msg: null, style: null });
-  }
+  // function handleClose(event, reason) {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setToast({ open: false, msg: null, style: null });
+  // }
 
-  const Alert = forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+  // const Alert = forwardRef(function Alert(props, ref) {
+  //   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  // });
 
   /********* SNACKBAR END *******/
 

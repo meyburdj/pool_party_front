@@ -2,7 +2,7 @@ import { TextField, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import camelCase from "lodash/camelCase";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const defaultInitialFormData = {
   rate: "",
@@ -29,8 +29,6 @@ const defaultInitialFormData = {
 function AddPoolForm({ addPool }) {
   const [formDataText, setFormDataText] = useState(defaultInitialFormData);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const navigate = useNavigate();
 
   /** Update form text input. */
   function handleChange(evt) {
@@ -63,7 +61,6 @@ function AddPoolForm({ addPool }) {
     await addPool(formData);
 
     setFormDataText(defaultInitialFormData);
-    // navigate("/");
   }
 
   const fields = ["rate", "size", "description"];

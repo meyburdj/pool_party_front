@@ -3,6 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import userContext from "./UserContext";
 import "./NavBar.css";
 
+/**
+ * NavBar: HTML/CSS navbar with hamburger
+ *
+ * Props:
+ * -logout(): function propdrilled from App that clears the JWT from local storage
+ */
 function NavBar({ logout }) {
   const { user } = useContext(userContext);
   const [isChecked, setIsChecked] = useState(false);

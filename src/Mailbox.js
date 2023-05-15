@@ -44,8 +44,6 @@ function MailBox() {
 
     const [outbox, setOutbox] = useState();
 
-    const [updateConversation, setUpdateConversation] = useState(false);
-
     /**effect that requests data concerning messages. Sets messages and sorts by
        contacts so that inbox/outbox state is sorted and with unique entries*/
     useEffect(function getMessagesAndSortContacts() {
@@ -71,7 +69,7 @@ function MailBox() {
         }
 
         fetchData();
-    }, []);
+    });
 
     //sorts messages by sender and reciever into a set 
     function sortContactsBasedOnMessages(messages) {

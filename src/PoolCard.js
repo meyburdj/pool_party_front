@@ -5,14 +5,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Box,
   Card,
   CardContent,
   CardActions,
   CardMedia,
   Button,
   Typography,
-  Modal,
 } from "@mui/material";
 import userContext from "./UserContext";
 import React, { useState, useContext } from "react";
@@ -32,7 +30,8 @@ import PoolPartyApi from "./api";
  * -open: state of message modal
  * -formDataText: message inside message modal
  *
- * PoolCardList -> [PooLCard, PooLCard, ... ]
+ * Component tree:
+ *  PoolCardList -> [PooLCard, PooLCard, ... ]
  */
 
 function PoolCard({ pool, addReservation, removeReservation }) {
@@ -41,7 +40,7 @@ function PoolCard({ pool, addReservation, removeReservation }) {
   const [formDataText, setFormDataText] = useState("");
 
   const linkStyle = { textDecoration: "none", color: "white" };
-  const reserveIds = new Set(user.reservationIds);
+  const reserveIds = new Set(user?.reservationIds);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -89,7 +88,7 @@ function PoolCard({ pool, addReservation, removeReservation }) {
       }
     } else {
       try {
-        const reservationId = user.reservations.filter(reservation => reservation.pool_id == pool.id)[0].id;
+        const reservationId = user.reservations.filter(reservation => reservation.pool_id === pool.id)[0].id;
         await removeReservation(reservationId, pool.id);
 
       } catch (err) {

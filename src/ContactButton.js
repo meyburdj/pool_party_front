@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Button from "@mui/material/Button";
 
 /**
  * ContactButton: Button with the name of a contact. Clicking rerenders MessageList

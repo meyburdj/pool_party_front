@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import PoolList from "./PoolList";
 import userContext from "./UserContext";
 import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
@@ -10,8 +9,7 @@ import AddPoolForm from "./AddPoolForm";
  * MyPools: Component that displays pools uploaded by current user and form to add 
  *  new pools
  *
- * Props:
- * -addPool(): function propdrilled from App that sends a post request 
+ * Props: NA
  * 
  * State: 
  * -formDataText: text entered into form fields
@@ -29,7 +27,7 @@ function MyPools() {
 
   useEffect(function getUsersPools() {
     fetchUsersPoolsFromApi();
-  }, []);
+  });
 
   async function addPool(newPoolData) {
     setPools(() => ({ isLoading: true }));
