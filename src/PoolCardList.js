@@ -1,21 +1,27 @@
 import React from 'react';
 import PoolCard from './PoolCard';
-import { Stack } from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 
-/** PoolCardList: Renders list of Pool cards
+/** 
+ * PoolCardList: Renders array of Pool cards
  *
  * Props:
- * - pools: list of pool objects
+ * - pools: Array of pool objects
+ * -addReservation: Function propdrilled from App that adds a reservation to db
+ *  and updates user state
+ * -removeReservation: Function propdrilled from App that removes a reservation 
+ *  from db and updates user state  
  *
+ * Component tree:
  *  PoolList -> PoolCardList -> [PoolCard,PoolCard,...]
  */
-function PoolCardList({ pools }) {
+function PoolCardList({ pools, addReservation, removeReservation }) {
 
     const poolList = pools.map(pool => (
         <Grid2 key={`${pool.id}-grid`} xs={6} md={4}>
-            <PoolCard key={pool.id} pool={pool} />
+            <PoolCard key={pool.id} pool={pool}
+                addReservation={addReservation} removeReservation={removeReservation} />
         </Grid2>
     ));
 

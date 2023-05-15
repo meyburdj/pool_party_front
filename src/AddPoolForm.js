@@ -2,7 +2,7 @@ import { TextField, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import camelCase from "lodash/camelCase";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const defaultInitialFormData = {
   rate: "",
@@ -13,20 +13,22 @@ const defaultInitialFormData = {
 };
 
 /**
- *Allows authenticated user to be add a pool
-*
-* Prop: signup - a function passed down that allows the user state to be set and
-for a post to be made creating a User
-*
-* State: formData - allows the component to be controlled.
-* - selectedFile - allows file uploaded to be controlled
+ * AddPoolForm: Form for adding a pool to database.
+ *
+ * Props:
+ * -addPool(): function propdrilled from App that sends a post request 
+ * 
+ * State: 
+ * -formDataText: text entered into form fields
+ * -selectedFile: file data added to formData
+ *
+ * Component tree:
+ *  MyPools -> AddPoolForm
  */
+
 function AddPoolForm({ addPool }) {
   const [formDataText, setFormDataText] = useState(defaultInitialFormData);
   const [selectedFile, setSelectedFile] = useState(null);
-  // const [toast, setToast] = useState({ open: false, msg: null, style: null });
-
-  const navigate = useNavigate();
 
   /** Update form text input. */
   function handleChange(evt) {
@@ -52,7 +54,6 @@ function AddPoolForm({ addPool }) {
     const formDataTextKeys = Object.keys(formDataText);
     formDataTextKeys.map((x) => formData.append(x, formDataText[x]));
 
-    // formData.append("text", formDataText);
     formData.append("file", selectedFile);
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
@@ -60,10 +61,9 @@ function AddPoolForm({ addPool }) {
     await addPool(formData);
 
     setFormDataText(defaultInitialFormData);
-    // navigate("/");
   }
 
-  const fields = ["rate", "size", "description", "city"];
+  const fields = ["rate", "size", "description"];
 
   return (
     <>
@@ -81,12 +81,24 @@ function AddPoolForm({ addPool }) {
               onChange={handleChange}
             />
           ))}
+          <select
+            id="city-select"
+            name="city"
+            value={formDataText.city}
+            onChange={handleChange}
+          >
+            <option value="">Select a city</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="San Francisco">San Francisco</option>
+            <option value="New York">New York</option>
+          </select>
           <input
             label="image"
             name="image"
             type="file"
             onChange={handleFileInput}
           />
+
           <Button variant="outlined" type="submit">
             Add Pool!
           </Button>

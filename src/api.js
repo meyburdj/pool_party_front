@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5001/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
 /** API Class.
  *
@@ -191,11 +191,11 @@ class PoolPartyApi {
         */
     static async createReservation({ pool_id, start_date, end_date }) {
         const res = await this.request(
-            `/api/reservations/${pool_id}`,
+            `reservations/${pool_id}`,
             { start_date, end_date },
             "post");
 
-        return res.token;
+        return res;
     }
 
     /**
@@ -233,6 +233,17 @@ class PoolPartyApi {
 
         return res.reservations;
     }
+
+    static async deleteBookedReservation(reservation_id) {
+        console.log("resId", reservation_id);
+        const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
+        return res;
+    }
+
+    // static async deleteBookedReservation(reservation_id) {
+    //     const res = await this.request(`reservations/${reservation_id}`, {}, "delete");
+    //     return res;
+    // }
 
 
 

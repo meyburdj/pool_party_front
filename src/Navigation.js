@@ -1,74 +1,77 @@
-import React from "react";
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import userContext from "./UserContext";
+import "./NavBar.css";
 
+/**
+ * NavBar: HTML/CSS navbar with hamburger
+ *
+ * Props:
+ * -logout(): function propdrilled from App that clears the JWT from local storage
+ */
 function NavBar({ logout }) {
   const { user } = useContext(userContext);
-
+  const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
-  const linkStyle = { textDecoration: "none", color: "white" };
+
+  function handleClick() {
+    logout();
+    setIsChecked(false);
+    navigate("/");
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar style={{ backgroundColor: "black" }}>
-          <Link to="/" style={linkStyle}>
-            <Button color="inherit">
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Pool Party
-              </Typography>
-            </Button>
-          </Link>
-          {/* logged out */}
-          {!user && (
-            <>
-              <Link to="/login" style={linkStyle}>
-                <Button color="inherit">login</Button>
-              </Link>
-              <Link to="/signup" style={linkStyle}>
-                <Button color="inherit">signup</Button>
-              </Link>
-            </>
-          )}
+    <div className="navbar">
+      <h1>
+        <Link to="/">Pool Party</Link>
+      </h1>
+      {user ? (
+        <>
+          <input type="checkbox" id="menu-toggle" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+          <label htmlFor="menu-toggle" className="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+          <ul>
+            <li>
+              <Link to="/" onClick={() => setIsChecked(false)}>Find Pools</Link>
+            </li>
+            <li>
+              <Link to="/messages" onClick={() => setIsChecked(false)}>Your Messages</Link>
+            </li>
+            <li>
+              <Link to="/memberships" onClick={() => setIsChecked(false)}>Joined Parties</Link>
+            </li>
+            <li>
+              <Link to="/mypools" onClick={() => setIsChecked(false)}>My Pools</Link>
+            </li>
+            <li>
+              <button onClick={handleClick}>Logout</button>
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <input type="checkbox" id="menu-toggle" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+          <label htmlFor="menu-toggle" className="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+          <ul>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup">Signup</Link>
 
-          {/* logged in  */}
-          {user && (
-            <>
-              <Link to="/pools" style={linkStyle}>
-                <Button color="inherit">pools</Button>
-              </Link>
-              <Link to="/reservations" style={linkStyle}>
-                <Button color="inherit">reservations</Button>
-              </Link>
-              <Link to="/users" style={linkStyle}>
-                <Button color="inherit">users</Button>
-              </Link>
-              <Link to="/messages" style={linkStyle}>
-                <Button color="inherit">messages</Button>
-              </Link>
-              <Link to="/mypools" style={linkStyle}>
-                <Button color="inherit">mypools</Button>
-              </Link>
-
-              <button
-                onClick={() => {
-                  logout();
-                  navigate("/");
-                }}
-              >
-                logout
-              </button>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+            </li>
+          </ul>
+        </>
+      )
+      }
+    </div >
   );
 }
 

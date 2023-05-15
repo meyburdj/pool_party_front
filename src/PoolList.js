@@ -1,60 +1,78 @@
 import { useState, useEffect } from "react";
 import PoolCardList from "./PoolCardList";
-// import SearchForm from "./SearchForm";
-import MultiSelectForm from "./MultiSelectForm";
 import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
+import MultiSelectForm from "./MultiSelectForm";
 
-/** // TODO: What does this component do?
- *
+/**
+ * PoolList: component that displays pools for user to search along with a filter
+ * 
  * Props:
- * -
- *
- *
+ *  -addReservation: propdrilled from App to PoolCard
+ *  -removeReservation: propdrilled from App to PoolCard
+ * 
  * State:
- * -
- *
- *  ComponentAbove -> ThisComponent -> ComponentBelow
- */
-
-
-function PoolList() {
-
-    const [pools, setPools] = useState({
+ *  -allPools: all pools in db
+ *  -pools: selected pools for display based on filters
+ * 
+ * Component tree:
+ *  RouteList -> PoolList -> [MultiSelectForm, PoolCardList]
+**/
+function PoolList({ addReservation, removeReservation }) {
+    const [allPools, setAllPools] = useState({
         data: null,
         isLoading: true,
     });
 
+    const [pools, setPools] = useState({
+        data: null,
+        city: "all",
+    });
+
     useEffect(function getPoolsOnMount() {
-        getPools();
+        getAllPools();
     }, []);
 
-    async function getPools() {
+    async function getAllPools() {
         const response = await PoolPartyApi.getPools();
-        setPools({
+        setAllPools({
             data: response,
             isLoading: false,
         });
     }
 
-    async function getPoolsByCity(city) {
-        const response = await PoolPartyApi.getPoolsByCity(city);
+    function getPoolsByCity(city) {
+        let pools;
+        city === "all"
+            ? (pools = allPools.data)
+            : (pools = allPools.data.filter((pool) => pool.city === city));
         setPools({
-            data: response,
-            isLoading: false,
+            data: pools,
+            city: city,
         });
     }
 
-    const cities = ["Los Angeles", "San Francisco", "New York", "Seattle"];
-    if (pools.isLoading) return <p><LinearProgress /></p>;
+    const cities = ["all", "Los Angeles", "San Francisco", "New York"];
+    if (allPools.isLoading) return <p><LinearProgress /></p>;
 
     return (
         <>
-            <MultiSelectForm label="Cities" options={cities} select={getPoolsByCity} />
-            <div style={{ "display": "flex", "justifyContent": "center" }}>
+            <MultiSelectForm
+                label="Cities"
+                options={cities}
+                select={getPoolsByCity}
+                value={pools.city}
+            />
+            <div style={{ display: "flex", justifyContent: "center" }}>
                 <h2>Join Your Party</h2>
             </div>
-            <PoolCardList pools={pools.data} />
+            {!pools.data ? (
+                <PoolCardList pools={allPools.data}
+                    addReservation={addReservation} removeReservation={removeReservation} />
+            ) : (
+                <PoolCardList pools={pools.data}
+                    addReservation={addReservation} removeReservation={removeReservation} />
+            )}
         </>
     );
 }

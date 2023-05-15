@@ -1,29 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
-import PoolList from "./PoolList";
 import userContext from "./UserContext";
 import PoolPartyApi from "./api";
 import { LinearProgress } from "@mui/material";
 import PoolCardList from "./PoolCardList";
 import AddPoolForm from "./AddPoolForm";
 
+/**
+ * MyPools: Component that displays pools uploaded by current user and form to add 
+ *  new pools
+ *
+ * Props: NA
+ * 
+ * State: 
+ * -formDataText: text entered into form fields
+ * -selectedFile: file data added to formData
+ *
+ * Component tree:
+ *  MyPools -> AddPoolForm
+ */
 function MyPools() {
   const { user } = useContext(userContext);
   const [pools, setPools] = useState({
     data: null,
     isLoading: true,
   });
-  // const [isLoading, setIsLoading] = useState(true);
-  console.log("pools has been updated to:", pools);
+
   useEffect(function getUsersPools() {
     fetchUsersPoolsFromApi();
-  }, []);
+  });
 
   async function addPool(newPoolData) {
-    console.log("we are in the addPool function in mypools");
+    setPools(() => ({ isLoading: true }));
     const newPool = await PoolPartyApi.createPool(newPoolData);
-    console.log("we have hit the newPool", newPool);
-
-    setPools(() => [...pools, newPool]);
+    setPools(() => [...pools.data, newPool]);
+    setPools(() => ({ isLoading: false }));
+    fetchUsersPoolsFromApi();
   }
 
   async function fetchUsersPoolsFromApi() {
@@ -40,21 +51,15 @@ function MyPools() {
     }
   }
 
-  if (pools.isLoading)
-    return (
-      <p>
-        <LinearProgress />
-      </p>
-    );
+  if (pools.isLoading) return <p><LinearProgress /></p>;
 
   return (
     <div>
       <AddPoolForm addPool={addPool} />
-      {/* {pools.length === 0 && <h4>Add your pools!</h4>} */}
       <div>
         <h2>Your Pools</h2>
       </div>
-      {pools.data.length >= 0 && <PoolCardList pools={pools.data} />}
+      {pools.data?.length >= 0 && <PoolCardList pools={pools.data} />}
     </div>
   );
 }
