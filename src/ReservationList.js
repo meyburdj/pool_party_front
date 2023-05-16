@@ -31,7 +31,8 @@ function ReservationList({ addReservation, removeReservation }) {
 
     useEffect(function getPoolsOnMount() {
         getAllReservations();
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.reservations]);
 
     async function getAllReservations() {
         try {

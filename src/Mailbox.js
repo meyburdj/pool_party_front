@@ -69,7 +69,8 @@ function MailBox() {
         }
 
         fetchData();
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     //sorts messages by sender and reciever into a set 
     function sortContactsBasedOnMessages(messages) {

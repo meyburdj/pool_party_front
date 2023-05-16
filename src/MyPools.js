@@ -27,7 +27,8 @@ function MyPools() {
 
   useEffect(function getUsersPools() {
     fetchUsersPoolsFromApi();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function addPool(newPoolData) {
     setPools(() => ({ isLoading: true }));
