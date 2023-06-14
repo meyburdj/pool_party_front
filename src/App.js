@@ -5,7 +5,6 @@ import RoutesList from "./RoutesList";
 import Navigation from "./Navigation";
 import { useState, useEffect } from "react";
 import PoolPartyApi from "./api";
-// import userContext from "./userContext";
 import { LinearProgress } from "@mui/material";
 import jwt_decode from "jwt-decode";
 import userContext from "./UserContext";
@@ -53,7 +52,6 @@ function App() {
         } catch (err) {
 
           console.log("error: ", err);
-          // setToast({ open: true, msg: err[0] });
         } finally {
           setIsLoading(false);
         }
